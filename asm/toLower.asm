@@ -1,4 +1,3 @@
-
 ADDI(x1, x0, 8)
 
 ADD(x2, x0, x1)
@@ -6,15 +5,16 @@ ADDI(x3, x0, 84) //Store T
 SB(x3, x2, 0)
 
 ADDI(x2, x2, 1)
-ADDI(x3, x0, 101) // Store e
+ADDI(x3, x0, 69) // Store E
+ADDI(x3, x3, 32) // make E lowercase
 SB(x3, x2, 0)
 
 ADDI(x2, x2, 1)
-ADDI(x3, x0, 115) // Store s
+ADDI(x3, x0, 83) // Store S
 SB(x3, x2, 0)
 
 ADDI(x2, x2, 1)
-ADDI(x3, x0, 116) //Store t
+ADDI(x3, x0, 84) //Store T
 SB(x3, x2, 0)
 
 ADDI(x6, x0, 0) // x6 is i
@@ -30,7 +30,7 @@ LB(x3, x2, 0)
 ADDI(x0, x0, 0)
 BLT(x3, x4, 16)
 BGE(x3, x5, 12)
-ADDI(x3, x3, -32) // Converts to UpperCase
+ADDI(x3, x3, 32) // Converts to LowerCase
 SB(x3, x2, 0)
 ADDI(x6, x6, 1) // Updates index
 ADD(x2, x1, x6) // Updates Pointers
