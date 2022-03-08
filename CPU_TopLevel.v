@@ -20,7 +20,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     
     //  Stage 2 Signals
     logic [31:0] rd_data1_stage2, rd_data2_stage2, rdata1_forward, rdata2_forward;
-    logic [31:0] INSTRUCTION_stage2, AUIPC_stage2, PC_def_stage2 ;
+    logic [31:0] INSTRUCTION_stage2, AUIPC_stage2, PC_def_stage2, PC_stage2;
     logic [19:0] u_imm20_stage2, u_imm20_stage3;
     logic [11:0] IMM12_stage2;
     logic [6:0] OPCODE_stage2;
@@ -38,13 +38,13 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     logic [6:0] OPCODE_stage3;
     logic [4:0] rd_addr2_stage3, wr_addr_stage3;
     logic [3:0] FLAG_REG;
-    logic [2:0] FUNCT3_stage3;
+    logic [2:0] FUNCT3_stage3, funcMem_stage3;
     logic FUNCT1_stage3, wr_en_stage3;
     logic load_stage3, sto_stage3;
 
     //  Garbage Signals
     logic unused_3;
-    logic [2:0] unused_4,unused_5;
+    logic [2:0] unused_4;
 
 
     //  Sort of Live Outside of Pipeline Stages
@@ -121,7 +121,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
         .func3(FUNCT3_stage2), // forwards alu func 3
         .func1(FUNCT1_stage2), // forwards alu func 1
         .regWrite(wr_en_stage2), // whether to write to reg file
-        .funcMem(unused_5)// function code for mem reader
+        .funcMem(funcMem)// function code for mem reader
         );
 
     branch_control branchUnit(
@@ -172,6 +172,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     pipelineReg #(.N(5))rd_addr2_pipe2(rd_addr2_stage3, rd_addr2_stage2, CLK, rst);
     pipelineReg #(.N(5))wr_addr_pipe2(wr_addr_stage3, wr_addr_stage2, CLK, rst);
     pipelineReg #(.N(3))FUNCT3_pipe2(FUNCT3_stage3, FUNCT3_stage2, CLK, rst);
+    pipelineReg #(.N(3))FUNCTMEM_pipe2(funcMem_stage3, funcMem, CLK, rst);
     pipelineReg #(.N(1))FUNCT1_pipe2(FUNCT1_stage3, FUNCT1_stage2, CLK, rst);
     pipelineReg #(.N(1))wr_en_pipe2(wr_en_stage3, wr_en_stage2, CLK, rst);
     
@@ -202,7 +203,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
         .regData(rd_data2_stage3),
         .MEM_rd_data(MEM_data),
         .OPCODE(OPCODE_stage3),
-        .func3(FUNCT3_stage3)
+        .func3(funcMem_stage3)
         );
 
     // logic [31:0] SLT_OUT_STAGE3;
