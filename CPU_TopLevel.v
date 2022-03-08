@@ -83,7 +83,6 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
         .PC_def(PC_def),
         .up_amt(up_amt_stage2),
         .RS1_DATA(rdata1_forward),
-        .immm(IMM12_stage2),
         .b_taken(inc_pc),
         .OP(OPCODE),
         .CLK(CLK),
