@@ -75,7 +75,7 @@ module control_unit (
             wbSel = 2'b00; //
             brUsed = 1'b0;
             br_useJalr = (useBr) ? 1'b1 : 1'b0;
-            func3 = 3'b000; //
+            func3 = instruction[14:12]; //
             func1 = 1'b0; //
             regWrite = 1'b0;
             funcMem = 3'b000;
