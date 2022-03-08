@@ -70,7 +70,12 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
         .func7(func7)
         );
 
-    assign up_amt = (OPCODE == 7'b1101111) ? {{12{j_imm20[19]}}, j_imm20}<<1 : {{20{b_imm12[11]}}, b_imm12}<<1;
+    logic [31:0] j_imm32, b_imm32;
+
+    signExtend #(.N(20), .MAX(32)) j_EXTEND(j_imm32, j_imm20);
+    signExtend #(.N(12), .MAX(32)) b_EXTEND(b_imm32, b_imm12);
+    // assign up_amt = (OPCODE == 7'b1101111) ? {{12{j_imm20[19]}}, j_imm20}<<1 : {{20{b_imm12[11]}}, b_imm12}<<1;
+    assign up_amt = (OPCODE == 7'b1101111) ? j_imm32 << 1 : b_imm32 <<1;
     assign IMM12 = sto ? s_imm12 : i_imm12;
 
     pc Program_Counter(
