@@ -1,0 +1,6 @@
+ADDI(x1, x0, 2)
+SLTI(x2, x1, 4)
+ADDI(x3, x0, 1)
+BEQ(x2,x3,8)
+ADDI(x4, x0, 5)
+ADDI(x4, x0, 69)

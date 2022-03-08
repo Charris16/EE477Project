@@ -1,0 +1,7 @@
+ADDI(x1,x0,1)
+ADDI(x3,x0,31)
+ADDI(x1,x1,1)
+BEQ(x1, x3, 8)
+JAL(x0, -8)
+ADDI(x2,x0,69)
+ADDI(x2,x0,420)
