@@ -39,7 +39,7 @@ module pc(IP, PC_def, up_amt, RS1_DATA, immm, b_taken, OP, CLK, RESET);
             end
             STALL: IP <= IP;
             JUMP: begin
-                if(OP == 7'b1100111) IP <= IP + i_immm_32 + RS1_DATA;
+                if(OP == 7'b1100111) IP <= IP + (i_immm_32 << 1) + RS1_DATA;
                 else IP <= IP + up_amt;
             end
         endcase
