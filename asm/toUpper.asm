@@ -7,6 +7,7 @@ SB(x3, x2, 0)
 
 ADDI(x2, x2, 1)
 ADDI(x3, x0, 69) // Store E
+ADDI(x3, x3, 32) // Store E
 SB(x3, x2, 0)
 
 ADDI(x2, x2, 1)
