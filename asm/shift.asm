@@ -2,6 +2,7 @@ ADDI (x1,x0,1)
 ADDI (x2,x0,1)
 ADDI (x3,x0,1)
 
+// SLL test
 SLL (x1,x1,x2)
 SLL (x1,x1,x2)
 SLL (x1,x1,x2)
@@ -35,6 +36,7 @@ SLL (x1,x1,x2)
 SLL (x1,x1,x2)
 SLL (x1,x1,x2)
 
+//SLLI test
 SLLI (x2,x2,1)
 SLLI (x2,x2,1)
 SLLI (x2,x2,1)
@@ -68,6 +70,7 @@ SLLI (x2,x2,1)
 SLLI (x2,x2,1)
 SLLI (x2,x2,1)
 
+//SRL test
 SRL (x2,x2,x3)
 SRL (x2,x2,x3)
 SRL (x2,x2,x3)
@@ -100,3 +103,17 @@ SRL (x2,x2,x3)
 SRL (x2,x2,x3)
 SRL (x2,x2,x3)
 SRL (x2,x2,x3)
+
+//SRLI test
+ADDI (x20, x0, 0)
+ADDI (x10, x0, 4)
+SRLI (X1, x10, 1) // x1 should be 4
+
+//SRA test
+ADDI (x10, x0, 2)
+ADDI(x11, x0, -9)
+SRA(x1, x11, x10) // x1 should be -3 0xfffffffd
+
+//SRAI test
+ADDI(x10, x0, -9)
+SRA(x1, x10, 1) // x1 should be -5 0xfffffffb
