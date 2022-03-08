@@ -30,7 +30,7 @@ LB(x3, x2, 0)
 ADDI(x0, x0, 0)
 BLT(x3, x4, 16)
 BGE(x3, x5, 12)
-ADDI(x3, x3, -32) // Converts to Lowercase
+ADDI(x3, x3, 32) // Converts to Lowercase
 SB(x3, x2, 0)
 ADDI(x6, x6, 1) // Updates index
 ADD(x2, x1, x6) // Updates Pointers
