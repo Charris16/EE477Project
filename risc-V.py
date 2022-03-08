@@ -6,9 +6,11 @@ if len(sys.argv) != 2:
     sys.exit(1)
 
 #clear file
-FILE_det = (str(sys.argv[1]).partition(".")[0] + ".bin")
+FILE_det = "bin/" + str(sys.argv[1]).partition("asm/")[2].partition(".")[0] + ".bin"
+print("Outputing to: ", FILE_det)
 with open(FILE_det, "w") as f:
 	pass
+
 
 FILE_src = str(sys.argv[1])
 det = open(FILE_det, "a")  # append mode
