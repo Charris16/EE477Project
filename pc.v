@@ -10,6 +10,9 @@ module pc(IP, PC_def, up_amt, RS1_DATA, immm, b_taken, OP, CLK, RESET);
     
     enum {INC4, STALL, JUMP} ps, ns;
 
+    logic [31:0] i_immm_32;
+    signExtend #(.N(12), .MAX(32)) j_EXTEND(i_immm_32, immm);
+
     always_comb begin
         case(ps)
             INC4: begin
@@ -36,7 +39,7 @@ module pc(IP, PC_def, up_amt, RS1_DATA, immm, b_taken, OP, CLK, RESET);
             end
             STALL: IP <= IP;
             JUMP: begin
-                if(OP == 7'b1100111) IP <= IP + immm + RS1_DATA;
+                if(OP == 7'b1100111) IP <= IP + i_immm_32 + RS1_DATA;
                 else IP <= IP + up_amt;
             end
         endcase
