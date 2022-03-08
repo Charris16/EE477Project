@@ -23,8 +23,8 @@ ADDI(x3, x0, 0) // CLear x3
 
 ADD(x2, x0, x1) // Resets Pointer
 
-ADDI(x4, x0, 65) // Lower Bound
-ADDI(x5, x0, 90) // Upper Bound
+ADDI(x4, x0, 97) // Lower Bound
+ADDI(x5, x0, 122) // Upper Bound
 
 LB(x3, x2, 0)
 ADDI(x0, x0, 0)
