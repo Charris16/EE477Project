@@ -1,11 +1,12 @@
 import sys
-print("INSTRUCTION (RD RS1 RS2)")
+global PC_addr
 
 if len(sys.argv) != 2:
     print("Error No File Passed")
     sys.exit(1)
 
 #clear file
+print("Compiling File: ", sys.argv[1])
 FILE_det = "bin/" + str(sys.argv[1]).partition("asm/")[2].partition(".")[0] + ".bin"
 print("Outputing to: ", FILE_det)
 with open(FILE_det, "w") as f:
@@ -35,10 +36,7 @@ def toBin (arg, n):
         hex = int(arg).to_bytes(4,byteorder='big', signed=True)
         temp = str(bin(int.from_bytes(hex, byteorder='big', signed=False)))
         temp = temp.replace("0b", "")
-        print(temp)
         temp = temp[ 32 - n : 32]
-        print(temp)
-        print(len(temp))
     else:
         temp = str(bin(int(arg)))
         temp = temp.replace("0b", "")
@@ -101,7 +99,9 @@ def writeR_Type(s):
     det.write(temp)
     det.write('_')
     det.write(op)
-    print("R_Type")
+    while len(s[0]) < 6:
+        s[0] = s[0] + " "
+    print("   R_Type: ", s[0], "  PC = ", PC_addr)
     return
 
 def writeI_Type(s):
@@ -171,8 +171,9 @@ def writeI_Type(s):
     det.write(temp)
     det.write('_')
     det.write(op)
-
-    print("I_Type")
+    while len(s[0]) < 6:
+        s[0] = s[0] + " "
+    print("   I_Type: ", s[0], "  PC = ", PC_addr)
     return
 
 def writeS_Type(s):
@@ -197,7 +198,9 @@ def writeS_Type(s):
     det.write(intem[7:len(intem)])
     det.write('_')
     det.write(op)
-    print("S_Type")
+    while len(s[0]) < 6:
+        s[0] = s[0] + " "
+    print("   S_Type: ", s[0], "  PC = ", PC_addr)
     return
 
 def writeB_Type(s):
@@ -232,7 +235,9 @@ def writeB_Type(s):
     det.write(intem[1])
     det.write("_")
     det.write(op)
-    print("B_Type")
+    while len(s[0]) < 6:
+        s[0] = s[0] + " "
+    print("   B_Type: ", s[0], "  PC = ", PC_addr)
     return
 
 def writeU_Type(s):
@@ -247,12 +252,13 @@ def writeU_Type(s):
     else:
         op = '0010111'
     det.write(op)
-
-    print("U_Type")
+    while len(s[0]) < 6:
+        s[0] = s[0] + " "
+    print("   U_Type: ", s[0], "  PC = ", PC_addr)
     return
 
 def writeJ_Type(s):
-    print("J_Type")
+    
     intem = toBin(s[1][1], 21)
     det.write(intem[0])
     det.write("_")
@@ -265,10 +271,13 @@ def writeJ_Type(s):
     det.write(toBin(s[1][0], 5))
     det.write("_")
     det.write("1101111")
+    while len(s[0]) < 7:
+        s[0] = s[0] + " "
+    print("   J_Type: ", s[0], " PC = ", PC_addr)
     return
 
 def writeCSRR(s):
-    print("CSRRW_Type")
+    print("   CSRRW_Type")
     intem = toBin(s[1][2], 12)
     det.write(intem)
     det.write("_")
@@ -300,6 +309,8 @@ def classifyInstruction(s):
     else:
         writeR_Type(s)
 
+
+PC_addr = 0
 while True:
     line = src.readline()
     if not line:
@@ -308,6 +319,8 @@ while True:
         op_format = format(line)
         classifyInstruction(op_format)
         det.write("\n")
+        PC_addr += 4
+print("-------Complete------")
 src.close()
 det.close()
 
