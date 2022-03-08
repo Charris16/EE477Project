@@ -1,4 +1,4 @@
-all: basic_add branch lui mem or_and shift SLT sum toLower toUpper
+all: basic_add branch lui mem or_and shift SLT sum toLower toUpper SB
 
 basic_add:
 	python3.10 risc-V.py asm/basic_add.asm
@@ -20,6 +20,8 @@ toLower:
 	python3.10 risc-V.py asm/toLower.asm
 toUpper:
 	python3.10 risc-V.py asm/toUpper.asm
+SB:
+	python3.10 risc-V.py asm/SB.asm
 clean:
 	@echo "Removing Binaries"
 	rm bin/*.bin
