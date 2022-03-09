@@ -9,9 +9,6 @@ module pc(IP, PC_def, up_amt, RS1_DATA, b_taken, OP, CLK, RESET);
     
     enum {INC4, STALL, JUMP} ps, ns;
 
-    logic [31:0] i_immm_32;
-    signExtend #(.N(12), .MAX(32)) j_EXTEND(i_immm_32, immm);
-
     always_comb begin
         case(ps)
             INC4: begin
