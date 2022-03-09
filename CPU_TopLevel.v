@@ -37,7 +37,6 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     logic [11:0] IMM12_stage3;
     logic [6:0] OPCODE_stage3;
     logic [4:0] rd_addr2_stage3, wr_addr_stage3;
-    logic [3:0] FLAG_REG;
     logic [2:0] FUNCT3_stage3, funcMem_stage3;
     logic FUNCT1_stage3, wr_en_stage3;
     logic load_stage3, sto_stage3;
@@ -181,7 +180,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     ALU_32b ALU(
         // .ALU_OUT(Out_Stage3),
         .ALU_OUT(ALU_OUT),
-        .FLAG_REG(FLAG_REG),
+        // .FLAG_REG(FLAG_REG),
         .RS1_DATA(rd_data1_stage3),
         .RS2_DATA(rd_data2_stage3),
         .PC(PC_stage3),

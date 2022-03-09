@@ -1,6 +1,6 @@
 module ALU_DataPath #(parameter N = 32) (
     OUT,
-    FLAGS,
+    // FLAGS,
     IN0,
     IN1,
     FUNC3,
@@ -13,7 +13,7 @@ module ALU_DataPath #(parameter N = 32) (
     input logic SUB, ALU_EN;
     
     output logic [N-1:0] OUT;
-    output logic [3:0] FLAGS;
+    // output logic [3:0] FLAGS;
 
     // temp flag ordering
     // FLAGS[0] zero
@@ -25,13 +25,13 @@ module ALU_DataPath #(parameter N = 32) (
     logic ADDER_EN;
     logic C_FLAG, X_FLAG, Z_FLAG, N_FLAG;
 
-    assign FLAGS[0] = Z_FLAG;
-    assign FLAGS[1] = C_FLAG;
-    assign FLAGS[2] = N_FLAG;
-    assign FLAGS[3] = X_FLAG;
+    // assign FLAGS[0] = Z_FLAG;
+    // assign FLAGS[1] = C_FLAG;
+    // assign FLAGS[2] = N_FLAG;
+    // assign FLAGS[3] = X_FLAG;
     
-    assign N_FLAG = OUT[N-1];
-    ZEROCHECK #(.N(N)) Zero_Flag(Z_FLAG, OUT);
+    // assign N_FLAG = OUT[N-1];
+    // ZEROCHECK #(.N(N)) Zero_Flag(Z_FLAG, OUT);
     ADDER #(.N(N)) ADD_PATH(ADDER_OUT, C_FLAG, X_FLAG, IN0, IN1, SUB);
     shifter #(.N(N), .SMAT(5)) bit_shiter(SHIFT_OUT, IN0, IN1[4:0], FUNC3, SUB);
     

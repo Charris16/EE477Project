@@ -1,4 +1,4 @@
-module ALU_Control #(parameter N = 32) (
+module ALU_Control (
     DATA0,
     DATA1,
     ALU_EN,
@@ -12,7 +12,7 @@ module ALU_Control #(parameter N = 32) (
     FUNCT1
     );
 
-    input logic [N-1:0] RS1_DATA, RS2_DATA, PC;
+    input logic [31-1:0] RS1_DATA, RS2_DATA, PC;
     input logic [19:0] U_IMM20;
     input logic [11:0] IMM12;
     input logic [6:0] OPCODE;
@@ -23,9 +23,9 @@ module ALU_Control #(parameter N = 32) (
     output logic [N-1:0] DATA0, DATA1;
     output logic ALU_EN;
 
-    logic [N-1:0] IMM32, U_IMM32;
+    logic [31-1:0] IMM32, U_IMM32;
     logic shift_op, INTEM, LUI, APUIC;
-    signExtend #(.N(12), .MAX(N)) IMM_EXTEND(IMM32, IMM12);
+    signExtend #(.N(12), .MAX(31)) IMM_EXTEND(IMM32, IMM12);
     assign U_IMM32 = {U_IMM20, 12'b0};
     // ARITHMATIC AND LOGIC FUNCT3
     // FUNCT3 000  ADD SUB / ADDI
@@ -57,7 +57,7 @@ module ALU_Control #(parameter N = 32) (
             default : shift_op = 1'b0;
         endcase
     end
-    logic [N-1:0] const_swap, IMM_val, LUI_base;
+    logic [31-1:0] const_swap, IMM_val, LUI_base;
     assign IMM_val = (LUI | APUIC) ? U_IMM32 : IMM32;
     assign const_swap = (shift_op & ~INTEM)? {'b0, RS2} : IMM_val;
     assign LUI_base = APUIC ? PC : 32'b0;
@@ -70,12 +70,10 @@ module bitExtend #(parameter N = 12, parameter MAX = 32) (EXTENDED, DATA);
     input logic [N-1:0] DATA;
     output logic [MAX-1:0] EXTENDED;
     assign EXTENDED = {'b0, DATA};
-
 endmodule
 
 module signExtend #(parameter N = 12, parameter MAX = 32) (EXTENDED, DATA);
     input logic signed [N-1:0] DATA;
     output logic signed [MAX-1:0] EXTENDED;
     assign EXTENDED = {{MAX{DATA[N-1]}}, DATA};
-
 endmodule
