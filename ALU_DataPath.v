@@ -1,4 +1,4 @@
-module ALU_DataPath #(parameter N = 32) (
+module ALU_DataPath (
     OUT,
     // FLAGS,
     IN0,
@@ -8,11 +8,11 @@ module ALU_DataPath #(parameter N = 32) (
     ALU_EN
     );
     
-    input logic [N-1:0] IN0,IN1;
+    input logic [31:0] IN0,IN1;
     input logic [2:0] FUNC3;
     input logic SUB, ALU_EN;
     
-    output logic [N-1:0] OUT;
+    output logic [31:0] OUT;
     // output logic [3:0] FLAGS;
 
     // temp flag ordering
@@ -21,7 +21,7 @@ module ALU_DataPath #(parameter N = 32) (
     // FLAGS[2] NEG
     // FLAGS[3] OVER
 
-    logic [N-1:0] ADDER_OUT, SHIFT_OUT, SLT_OUT;
+    logic [31:0] ADDER_OUT, SHIFT_OUT, SLT_OUT;
     logic ADDER_EN;
     logic C_FLAG, X_FLAG, Z_FLAG, N_FLAG;
 
@@ -32,8 +32,8 @@ module ALU_DataPath #(parameter N = 32) (
     
     // assign N_FLAG = OUT[N-1];
     // ZEROCHECK #(.N(N)) Zero_Flag(Z_FLAG, OUT);
-    ADDER #(.N(N)) ADD_PATH(ADDER_OUT, C_FLAG, X_FLAG, IN0, IN1, SUB);
-    shifter #(.N(N), .SMAT(5)) bit_shiter(SHIFT_OUT, IN0, IN1[4:0], FUNC3, SUB);
+    ADDER #(.N(32)) ADD_PATH(ADDER_OUT, C_FLAG, X_FLAG, IN0, IN1, SUB);
+    shifter #(.N(32), .SMAT(5)) bit_shiter(SHIFT_OUT, IN0, IN1[4:0], FUNC3, SUB);
     
     SLT_OP SLT_LOGIC(
         .OUT(SLT_OUT),
@@ -55,19 +55,19 @@ module ALU_DataPath #(parameter N = 32) (
     always_comb begin
         case(FUNC3)
             // ADDER CASES
-            3'b000: OUT = ALU_EN ? ADDER_OUT : 'b0;  // ADD SUB / ADDI
+            3'b000: OUT = ALU_EN ? ADDER_OUT : 32'b0;  // ADD SUB / ADDI
             
             // SLT and SLTU
-            3'b010: OUT = ALU_EN ? SLT_OUT : 'b0;  // SLT / SLTI
-            3'b011: OUT = ALU_EN ? SLT_OUT : 'b0;  // SLTU / SLTUI
+            3'b010: OUT = ALU_EN ? SLT_OUT : 32'b0;  // SLT / SLTI
+            3'b011: OUT = ALU_EN ? SLT_OUT : 32'b0;  // SLTU / SLTUI
             
             // LOGIC CASES
-            3'b100: OUT = ALU_EN ? (IN0 ^ IN1) : 'b0; // XOR / XORI
-            3'b110: OUT = ALU_EN ? (IN0 | IN1) : 'b0; // OR / ORI
-            3'b111: OUT = ALU_EN ? (IN0 & IN1) : 'b0; // AND / ANDI
+            3'b100: OUT = ALU_EN ? (IN0 ^ IN1) : 32'b0; // XOR / XORI
+            3'b110: OUT = ALU_EN ? (IN0 | IN1) : 32'b0; // OR / ORI
+            3'b111: OUT = ALU_EN ? (IN0 & IN1) : 32'b0; // AND / ANDI
             
             // SHIFTER CASES
-            default: OUT = ALU_EN ? SHIFT_OUT : 'b0; //  SLLI / SLL / SRLI / SRL / SRA / SRAI
+            default: OUT = ALU_EN ? SHIFT_OUT : 32'b0; //  SLLI / SLL / SRLI / SRL / SRA / SRAI
         endcase
     end
 endmodule 
