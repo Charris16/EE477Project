@@ -11,7 +11,8 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     logic [19:0] j_imm20_stage2;
     logic [11:0] IMM12, i_imm12, s_imm12, b_imm12;
     logic [11:0] b_imm12_stage2;
-    logic [6:0] OPCODE, func7;
+    logic [8:0] func7;
+    logic [6:0] OPCODE;
     logic [2:0] func3;
 	logic rd_en1, rd_en2;
 	logic [4:0] rs1, rs2, rd;
@@ -44,12 +45,13 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     //  Garbage Signals
     logic unused_3;
     logic [2:0] unused_4;
+    logic [1:0] wbSel;
 
 
     //  Sort of Live Outside of Pipeline Stages
     //  Branch Signals 
     logic inc_pc; //  Stage 2 branch sucess signal
-    logic branch_taken, wbSel, br_useJalr;
+    logic branch_taken, br_useJalr;
     logic brOrJmp, brUsed;
     // logic brOrJal;
     
