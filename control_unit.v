@@ -97,7 +97,7 @@ module control_unit (
             rs2Sel = 2'b10;
             brOrJmp = 1'b0; //
             wbSel = 2'b10;
-            brUsed = 2'b00; //
+            brUsed = 1'b0; //
             br_useJalr = 1'b0;
             func3 = `FNC_ADD_SUB;
             func1 = `FNC2_ADD;
