@@ -74,8 +74,8 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
 
     logic [31:0] j_imm32, b_imm32;
 
-    signExtend #(.N(20), .MAX(32)) j_EXTEND(j_imm32, j_imm20 << 1);
-    signExtend #(.N(12), .MAX(32)) b_EXTEND(b_imm32, b_imm12 << 1);
+    signExtend_20 j_EXTEND(j_imm32, j_imm20 << 1);
+    signExtend_12 b_EXTEND(b_imm32, b_imm12 << 1);
     // assign up_amt = (OPCODE == 7'b1101111) ? {{12{j_imm20[19]}}, j_imm20}<<1 : {{20{b_imm12[11]}}, b_imm12}<<1;
     assign up_amt = (OPCODE == 7'b1101111) ? j_imm32 : b_imm32;
     assign IMM12 = sto ? s_imm12 : i_imm12;
@@ -91,23 +91,25 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
         );
 
     
-    pipelineReg #(.N(32))INSTRUCTION_pipe1(INSTRUCTION_stage2, INSTRUCTION, CLK, rst);
-    pipelineReg #(.N(32))up_amt_pipe1(up_amt_stage2, up_amt, CLK, rst);
-    pipelineReg #(.N(32))PC_def_pipe1(PC_def_stage2, PC_def, CLK, rst);
-    pipelineReg #(.N(32))AUIPC_pipe1(PC_stage2, Instr_Addr, CLK, rst);
+    pipelineReg_32 INSTRUCTION_pipe1(INSTRUCTION_stage2, INSTRUCTION, CLK, rst);
+    pipelineReg_32 up_amt_pipe1(up_amt_stage2, up_amt, CLK, rst);
+    pipelineReg_32 PC_def_pipe1(PC_def_stage2, PC_def, CLK, rst);
+    pipelineReg_32 AUIPC_pipe1(PC_stage2, Instr_Addr, CLK, rst);
 
-    pipelineReg #(.N(20))j_imma_pipe1(j_imm20_stage2, j_imm20, CLK, rst);
-    pipelineReg #(.N(20))U_imma_pipe1(u_imm20_stage2, u_imm20, CLK, rst);
-    pipelineReg #(.N(12))IMM12_pipe1(IMM12_stage2, IMM12, CLK, rst);
-    pipelineReg #(.N(12))B_imm12_pipe1(b_imm12_stage2, b_imm12, CLK, rst);
-    pipelineReg #(.N(7))OPCODE_pipe1(OPCODE_stage2, OPCODE, CLK, rst);
+    pipelineReg_20 j_imma_pipe1(j_imm20_stage2, j_imm20, CLK, rst);
+    pipelineReg_20 U_imma_pipe1(u_imm20_stage2, u_imm20, CLK, rst);
+   
+    pipelineReg_12 IMM12_pipe1(IMM12_stage2, IMM12, CLK, rst);
+    pipelineReg_12 B_imm12_pipe1(b_imm12_stage2, b_imm12, CLK, rst);
     
-    pipelineReg #(.N(5))rd_addr1_pipe1(rd_addr1_stage2, rs1, CLK, rst);
-    pipelineReg #(.N(5))rd_addr2_pipe1(rd_addr2_stage2, rs2, CLK, rst);
-    pipelineReg #(.N(5))wr_addr_pipe1(wr_addr_stage2, rd, CLK, rst);
+    pipelineReg_7 OPCODE_pipe1(OPCODE_stage2, OPCODE, CLK, rst);
+    
+    pipelineReg_5 rd_addr1_pipe1(rd_addr1_stage2, rs1, CLK, rst);
+    pipelineReg_5 rd_addr2_pipe1(rd_addr2_stage2, rs2, CLK, rst);
+    pipelineReg_5 wr_addr_pipe1(wr_addr_stage2, rd, CLK, rst);
 
-    pipelineReg #(.N(1))rd_en1_pipe1(rd_en1_stage2, rd_en1, CLK, rst);
-    pipelineReg #(.N(1))rd_en2_pipe1(rd_en2_stage2, rd_en2, CLK, rst);
+    pipelineReg_1 rd_en1_pipe1(rd_en1_stage2, rd_en1, CLK, rst);
+    pipelineReg_1 rd_en2_pipe1(rd_en2_stage2, rd_en2, CLK, rst);
 
     control_unit con_unit(
         .instruction(INSTRUCTION_stage2),
@@ -161,19 +163,25 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
         .WR_EN_STAGE3(wr_en_stage3)
         );
     
-    pipelineReg #(.N(32))PC_def_pipe2(PC_def_stage3, PC_def_stage2, CLK, rst);
-    pipelineReg #(.N(32))rd_data1_pipe2(rd_data1_stage3, rdata1_forward, CLK, rst);
-    pipelineReg #(.N(32))rd_data2_pipe2(rd_data2_stage3, rdata2_forward, CLK, rst);
-    pipelineReg #(.N(32))PC_pipe2(PC_stage3, PC_stage2, CLK, rst);
-    pipelineReg #(.N(20))U_imma_pipe2(u_imm20_stage3, u_imm20_stage2, CLK, rst);
-    pipelineReg #(.N(12))IMM12_pipe2(IMM12_stage3, IMM12_stage2, CLK, rst);
-    pipelineReg #(.N(7))OPCODE_pipe2(OPCODE_stage3, OPCODE_stage2, CLK, rst);
-    pipelineReg #(.N(5))rd_addr2_pipe2(rd_addr2_stage3, rd_addr2_stage2, CLK, rst);
-    pipelineReg #(.N(5))wr_addr_pipe2(wr_addr_stage3, wr_addr_stage2, CLK, rst);
-    pipelineReg #(.N(3))FUNCT3_pipe2(FUNCT3_stage3, FUNCT3_stage2, CLK, rst);
-    pipelineReg #(.N(3))FUNCTMEM_pipe2(funcMem_stage3, funcMem, CLK, rst);
-    pipelineReg #(.N(1))FUNCT1_pipe2(FUNCT1_stage3, FUNCT1_stage2, CLK, rst);
-    pipelineReg #(.N(1))wr_en_pipe2(wr_en_stage3, wr_en_stage2, CLK, rst);
+    pipelineReg_32 PC_def_pipe2(PC_def_stage3, PC_def_stage2, CLK, rst);
+    pipelineReg_32 rd_data1_pipe2(rd_data1_stage3, rdata1_forward, CLK, rst);
+    pipelineReg_32 rd_data2_pipe2(rd_data2_stage3, rdata2_forward, CLK, rst);
+    pipelineReg_32 PC_pipe2(PC_stage3, PC_stage2, CLK, rst);
+    
+    pipelineReg_20 U_imma_pipe2(u_imm20_stage3, u_imm20_stage2, CLK, rst);
+    
+    pipelineReg_12 IMM12_pipe2(IMM12_stage3, IMM12_stage2, CLK, rst);
+    
+    pipelineReg_7 OPCODE_pipe2(OPCODE_stage3, OPCODE_stage2, CLK, rst);
+    
+    pipelineReg_5 rd_addr2_pipe2(rd_addr2_stage3, rd_addr2_stage2, CLK, rst);
+    pipelineReg_5 wr_addr_pipe2(wr_addr_stage3, wr_addr_stage2, CLK, rst);
+    
+    pipelineReg_3 FUNCT3_pipe2(FUNCT3_stage3, FUNCT3_stage2, CLK, rst);
+    pipelineReg_3 FUNCTMEM_pipe2(funcMem_stage3, funcMem, CLK, rst);
+    
+    pipelineReg_1 FUNCT1_pipe2(FUNCT1_stage3, FUNCT1_stage2, CLK, rst);
+    pipelineReg_1 wr_en_pipe2(wr_en_stage3, wr_en_stage2, CLK, rst);
     
     // assign ALU_OUT = ((OPCODE == 7'b1101111) | (OPCODE == 7'b1100111)) ? PC_def_stage3 : Out_Stage3; 
 
