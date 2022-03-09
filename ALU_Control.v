@@ -12,7 +12,7 @@ module ALU_Control (
     FUNCT1
     );
 
-    input logic [31-1:0] RS1_DATA, RS2_DATA, PC;
+    input logic [31:0] RS1_DATA, RS2_DATA, PC;
     input logic [19:0] U_IMM20;
     input logic [11:0] IMM12;
     input logic [6:0] OPCODE;
@@ -20,7 +20,7 @@ module ALU_Control (
     input logic [2:0] FUNCT3;
     input logic FUNCT1;  // PREFIX IS TOP 7 BITS OF INSTRUCTION
 
-    output logic [N-1:0] DATA0, DATA1;
+    output logic [31:0] DATA0, DATA1;
     output logic ALU_EN;
 
     logic [31-1:0] IMM32, U_IMM32;
@@ -57,7 +57,7 @@ module ALU_Control (
             default : shift_op = 1'b0;
         endcase
     end
-    logic [31-1:0] const_swap, IMM_val, LUI_base;
+    logic [31:0] const_swap, IMM_val, LUI_base;
     assign IMM_val = (LUI | APUIC) ? U_IMM32 : IMM32;
     assign const_swap = (shift_op & ~INTEM)? {'b0, RS2} : IMM_val;
     assign LUI_base = APUIC ? PC : 32'b0;
