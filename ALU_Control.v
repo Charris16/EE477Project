@@ -75,5 +75,5 @@ endmodule
 module signExtend #(parameter N = 12, parameter MAX = 32) (EXTENDED, DATA);
     input logic signed [N-1:0] DATA;
     output logic signed [MAX-1:0] EXTENDED;
-    assign EXTENDED = {{MAX{DATA[N-1]}}, DATA};
+    assign EXTENDED = {{MAX-N{DATA[N-1]}}, DATA};
 endmodule
