@@ -32,8 +32,8 @@ module ALU_DataPath (
     
     // assign N_FLAG = OUT[N-1];
     // ZEROCHECK #(.N(N)) Zero_Flag(Z_FLAG, OUT);
-    ADDER #(.N(32)) ADD_PATH(ADDER_OUT, C_FLAG, X_FLAG, IN0, IN1, SUB);
-    shifter #(.N(32), .SMAT(5)) bit_shiter(SHIFT_OUT, IN0, IN1[4:0], FUNC3, SUB);
+    ADDER ADD_PATH(ADDER_OUT, C_FLAG, X_FLAG, IN0, IN1, SUB);
+    shifter bit_shiter(SHIFT_OUT, IN0, IN1[4:0], FUNC3, SUB);
     
     SLT_OP SLT_LOGIC(
         .OUT(SLT_OUT),
@@ -72,39 +72,39 @@ module ALU_DataPath (
     end
 endmodule 
 
-module ZEROCHECK #(parameter N = 32)(Zero, DATA);
-    input logic [N-1:0] DATA;
-    output logic Zero;
-    always_comb begin
-        case(DATA)
-            'b0: Zero = 1'b1;
-            default: Zero = 1'b0;
-        endcase
-    end
-endmodule
+// module ZEROCHECK #(parameter N = 32)(Zero, DATA);
+//     input logic [N-1:0] DATA;
+//     output logic Zero;
+//     always_comb begin
+//         case(DATA)
+//             'b0: Zero = 1'b1;
+//             default: Zero = 1'b0;
+//         endcase
+//     end
+// endmodule
 
-module ADDER #(parameter N = 32) (ADDER_OUT, COUT, X_FLAG, A, B, SUB);
-    input logic [N-1:0] A, B;
+module ADDER (ADDER_OUT, COUT, X_FLAG, A, B, SUB);
+    input logic [31:0] A, B;
     input logic SUB;
-    output logic [N-1:0] ADDER_OUT;
+    output logic [31:0] ADDER_OUT;
     output logic COUT, X_FLAG;
 
-    logic [N-1:0] B_mux;
+    logic [31:0] B_mux;
     assign B_mux = SUB ? ~B : B;
 
-    logic CARRY_BITS[N-1:0];
+    logic CARRY_BITS[31:0];
 
     FA adder_bit0(.SUM(ADDER_OUT[0]), .COUT(CARRY_BITS[0]), .A(A[0]), .B(B_mux[0]), .CIN(SUB));
 
     genvar i;
     generate
-        for (i = 1; i < N; i++) begin
+        for (i = 1; i < 32; i++) begin
             FA adder_bit(.SUM(ADDER_OUT[i]), .COUT(CARRY_BITS[i]), .A(A[i]), .B(B_mux[i]), .CIN(CARRY_BITS[i-1]));
         end
 
     endgenerate
-    assign COUT = CARRY_BITS[N-1];
-    assign X_FLAG = CARRY_BITS[N-1] ^ CARRY_BITS[N-2];
+    assign COUT = CARRY_BITS[31];
+    assign X_FLAG = CARRY_BITS[31] ^ CARRY_BITS[30];
 endmodule
 
 module FA (SUM, COUT, A, B, CIN);
@@ -113,12 +113,12 @@ module FA (SUM, COUT, A, B, CIN);
     assign {COUT, SUM} =  A + B + CIN;
 endmodule 
 
-module shifter #(parameter N = 32, parameter SMAT = 5 ) (OUT, DIN, SHAMT, FUNC3, FUNC1); // SRA CURRENTLY BROKEN
-    input logic signed [N-1:0] DIN;
-    input logic [SMAT-1:0] SHAMT;
+module shifter(OUT, DIN, SHAMT, FUNC3, FUNC1); // SRA CURRENTLY BROKEN
+    input logic signed [31:0] DIN;
+    input logic [4:0] SHAMT;
     input logic [2:0] FUNC3;
     input logic FUNC1;
-    output logic [N-1:0] OUT;
+    output logic [31:0] OUT;
     
     always_comb begin
         case (FUNC3)
