@@ -6,8 +6,7 @@ module ALU_32b(
     PC, U_IMM20,
     RS2, IMM12,
     OPCODE,FUNCT3,
-    FUNCT1,
-    CLK
+    FUNCT1
     );
 
     input logic [31:0] RS1_DATA, RS2_DATA, PC;

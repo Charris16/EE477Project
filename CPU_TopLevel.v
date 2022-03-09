@@ -50,7 +50,8 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     //  Branch Signals 
     logic inc_pc; //  Stage 2 branch sucess signal
     logic branch_taken, wbSel, br_useJalr;
-    logic brOrJmp, brOrJal, brUsed;
+    logic brOrJmp, brUsed;
+    // logic brOrJal;
     
     assign OPCODE = INSTRUCTION[6:0];
     assign sto = (OPCODE == 7'b0100011);
@@ -115,14 +116,13 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
         .brOrJmp(brOrJmp), // selects whether to take b or j type immediate for adding to pc
         .wbSel(wbSel), // selects which data source to write back to regfile from
         .brUsed(brUsed), // indicated branch or jump happened
-        .brOrJal(brOrJal), // selects whether to use b or jal for adding to pc 
+        // .brOrJal(brOrJal), // selects whether to use b or jal for adding to pc 
         .br_useJalr(br_useJalr),
         .func3(FUNCT3_stage2), // forwards alu func 3
         .func1(FUNCT1_stage2), // forwards alu func 1
         .regWrite(wr_en_stage2), // whether to write to reg file
         .funcMem(funcMem)// function code for mem reader
         );
-
     branch_control branchUnit(
         .rs1(rdata1_forward),
         .rs2(rdata2_forward),
@@ -189,8 +189,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
         .IMM12(IMM12_stage3),
         .OPCODE(OPCODE_stage3),
         .FUNCT3(FUNCT3_stage3),
-        .FUNCT1(FUNCT1_stage3),
-        .CLK(CLK)
+        .FUNCT1(FUNCT1_stage3)
         );
 
     MemControler Mem_CON(
