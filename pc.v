@@ -1,6 +1,5 @@
-module pc(IP, PC_def, up_amt, RS1_DATA, b_taken, OP, CLK, RESET);
+module pc(IP, PC_def, up_amt, b_taken, OP, CLK, RESET);
     input logic signed [31:0] up_amt;
-    input logic [31:0] RS1_DATA;
     input logic [6:0] OP;
     input logic b_taken, CLK, RESET;
     output logic [31:0] IP, PC_def;
