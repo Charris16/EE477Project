@@ -153,7 +153,6 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
         .ALUOUT_STAGE3(reg_wr_data),
         .RS1_DATA_STAGE2(rd_data1_stage2),
         .RS2_DATA_STAGE2(rd_data2_stage2),
-        .MEM_IN(Memory_Load),
         .OPCODE_STAGE3(OPCODE_stage3),
         .wr_addr_STAGE3(wr_addr_stage3),
         .RADDR1_STAGE2(rd_addr1_stage2),

@@ -4,7 +4,6 @@ module forward_unit (
     ALUOUT_STAGE3,
     RS1_DATA_STAGE2,
     RS2_DATA_STAGE2,
-    MEM_IN,
     OPCODE_STAGE3,
     wr_addr_STAGE3,
     RADDR1_STAGE2,
@@ -12,7 +11,7 @@ module forward_unit (
     WR_EN_STAGE3
     );
 
-    input logic [31:0] ALUOUT_STAGE3, RS1_DATA_STAGE2, RS2_DATA_STAGE2, MEM_IN ;
+    input logic [31:0] ALUOUT_STAGE3, RS1_DATA_STAGE2, RS2_DATA_STAGE2 ;
     input logic [6:0] OPCODE_STAGE3;
     input logic [4:0] wr_addr_STAGE3, RADDR1_STAGE2, RADDR2_STAGE2;
     input logic WR_EN_STAGE3;
