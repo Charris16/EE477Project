@@ -13,25 +13,11 @@ module ALU_DataPath (
     input logic SUB, ALU_EN;
     
     output logic [31:0] OUT;
-    // output logic [3:0] FLAGS;
-
-    // temp flag ordering
-    // FLAGS[0] zero
-    // FLAGS[1] Carry
-    // FLAGS[2] NEG
-    // FLAGS[3] OVER
 
     logic [31:0] ADDER_OUT, SHIFT_OUT, SLT_OUT;
     logic ADDER_EN;
     logic C_FLAG, X_FLAG, Z_FLAG, N_FLAG;
 
-    // assign FLAGS[0] = Z_FLAG;
-    // assign FLAGS[1] = C_FLAG;
-    // assign FLAGS[2] = N_FLAG;
-    // assign FLAGS[3] = X_FLAG;
-    
-    // assign N_FLAG = OUT[N-1];
-    // ZEROCHECK #(.N(N)) Zero_Flag(Z_FLAG, OUT);
     ADDER ADD_PATH(ADDER_OUT, C_FLAG, X_FLAG, IN0, IN1, SUB);
     shifter bit_shiter(SHIFT_OUT, IN0, IN1[4:0], FUNC3, SUB);
     
@@ -41,16 +27,6 @@ module ALU_DataPath (
         .RS1_DATA(IN0),
         .RS2_DATA(IN1)
         );
-    // OP 000  ADD SUB / ADDI
-    // OP 010  SLT / SLTI
-    // OP 011  SLTU / SLTUI
-    
-    // OP 100  XOR / XORI
-    // OP 110  OR / ORI
-    // OP 111  AND/ ANDI
-
-    // OP 001 SLLI SLL
-    // OP 101 SRLI SRL SRA SRAI
 
     always_comb begin
         case(FUNC3)
@@ -72,16 +48,6 @@ module ALU_DataPath (
     end
 endmodule 
 
-// module ZEROCHECK #(parameter N = 32)(Zero, DATA);
-//     input logic [N-1:0] DATA;
-//     output logic Zero;
-//     always_comb begin
-//         case(DATA)
-//             'b0: Zero = 1'b1;
-//             default: Zero = 1'b0;
-//         endcase
-//     end
-// endmodule
 
 module ADDER (ADDER_OUT, COUT, X_FLAG, A, B, SUB);
     input logic [31:0] A, B;

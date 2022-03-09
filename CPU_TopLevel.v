@@ -1,6 +1,6 @@
-module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_wr_en,  INSTRUCTION, MEM_data, CLK, rst);
+module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_wr_en,  INSTRUCTION, MEM_data, CLK, Reset);
     input logic [31:0] INSTRUCTION, MEM_data;
-    input logic CLK, rst;
+    input logic CLK, Reset;
     output logic [31:0] Instr_Addr, MEM_addr, MEM_WR_out;
     output logic [2:0] MEM_type;
     output logic MEM_rd_en, MEM_wr_en;

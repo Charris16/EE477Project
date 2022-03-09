@@ -19,7 +19,7 @@ module CPU(CLK, Reset);
         .INSTRUCTION(instruction),
         .MEM_data(MEM_data),
         .CLK(CLK),
-        .rst(Reset)
+        .Reset(Reset)
         );
 
      Memory DATA_MEM(
