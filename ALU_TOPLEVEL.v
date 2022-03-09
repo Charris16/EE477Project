@@ -15,7 +15,7 @@ module ALU_32b(
     input logic [6:0] OPCODE;
     input logic [4:0] RS2;
     input logic [2:0] FUNCT3;
-    input logic CLK, FUNCT1;
+    input logic FUNCT1;
     
     output logic [31:0] ALU_OUT;
     // output reg [3:0] FLAG_REG;
