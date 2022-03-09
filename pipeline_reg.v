@@ -7,7 +7,7 @@ module pipelineReg #(parameter N = 32)(DOUT, DIN, CLK, RST);
     output logic [N-1:0] DOUT;
 
     always_ff @(posedge CLK) begin
-        if(RST) DOUT <= 'b0;
+        if(RST) DOUT <= {N{1'b0}};
         else DOUT <= DIN;
     end
 endmodule
