@@ -23,7 +23,7 @@ module ALU_Control (
 
     logic [31:0] IMM32, U_IMM32;
     logic shift_op, INTEM, LUI, APUIC;
-    signExtend #(.N(12), .MAX(31)) IMM_EXTEND(IMM32, IMM12);
+    signExtend #(.N(12), .MAX(32)) IMM_EXTEND(IMM32, IMM12);
     assign U_IMM32 = {U_IMM20, 12'b0};
     // ARITHMATIC AND LOGIC FUNCT3
     // FUNCT3 000  ADD SUB / ADDI
@@ -64,14 +64,15 @@ module ALU_Control (
 
 endmodule
 
-module bitExtend #(parameter N = 12, parameter MAX = 32) (EXTENDED, DATA);
-    input logic [N-1:0] DATA;
-    output logic [MAX-1:0] EXTENDED;
-    assign EXTENDED = {'b0, DATA};
-endmodule
+// module bitExtend #(parameter N = 12, parameter MAX = 32) (EXTENDED, DATA);
+//     input logic [N-1:0] DATA;
+//     output logic [MAX-1:0] EXTENDED;
+//     assign EXTENDED = {'b0, DATA};
+// endmodule
 
 module signExtend #(parameter N = 12, parameter MAX = 32) (EXTENDED, DATA);
     input logic signed [N-1:0] DATA;
     output logic signed [MAX-1:0] EXTENDED;
-    assign EXTENDED = {{MAX-N{DATA[N-1]}}, DATA};
+    // assign EXTENDED = {{MAX-N{DATA[N-1]}}, DATA};
+    assign EXTENDED = $signed(DATA);
 endmodule
