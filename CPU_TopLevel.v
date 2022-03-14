@@ -138,7 +138,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
 
     regfile REG(
         .clk(CLK),
-        .Reset(Reset),
+        .rst(Reset),
         .wr_en(wr_en_stage3 | load_stage3),
         .wr_addr(wr_addr_stage3),
         .wr_data(reg_wr_data),
