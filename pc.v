@@ -33,7 +33,7 @@ module pc(
     always_ff @(posedge CLK) begin
         IP <= 32'b0;
         case(ps)
-            INC4: IP <= IP + 32'd4;
+            INC4: IP <= RESET ? 32'b0 : IP + 32'd4;
             STALL: IP <= b_taken ? IP + up_amt : IP + 32'd4;
         endcase
     end
