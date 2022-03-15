@@ -23,6 +23,7 @@ module pc(IP, PC_def, up_amt, b_taken, OP, CLK, RESET);
                 else ns = INC4;
             end
             JUMP: ns = INC4;
+            default ns = INC4;
         endcase
     end 
 
