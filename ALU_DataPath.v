@@ -80,7 +80,7 @@ module FA (SUM, COUT, A, B, CIN);
 endmodule 
 
 module shifter(OUT, DIN, SHAMT, FUNC3, FUNC1); // SRA CURRENTLY BROKEN
-    input logic signed [31:0] DIN;
+    input logic [31:0] DIN;
     input logic [4:0] SHAMT;
     input logic [2:0] FUNC3;
     input logic FUNC1;
@@ -89,7 +89,7 @@ module shifter(OUT, DIN, SHAMT, FUNC3, FUNC1); // SRA CURRENTLY BROKEN
     always_comb begin
         case (FUNC3)
             3'b001: OUT = DIN << SHAMT;
-            3'b101: OUT = FUNC1 ? DIN >>> SHAMT : DIN >> SHAMT;
+            3'b101: OUT = $unsigned(FUNC1 ? $signed(DIN) >>> SHAMT : DIN >> SHAMT);
             default: OUT = 32'b0;
         endcase
     end
