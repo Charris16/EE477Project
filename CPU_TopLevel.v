@@ -60,7 +60,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
         .b_imm12(b_imm12), 
         .u_imm20(u_imm20), 
         .j_imm20(j_imm20),
-        .instruction(INSTRUCTION),
+        .instruction(INSTRUCTION)
         );
 
     logic [31:0] j_imm32, b_imm32;
