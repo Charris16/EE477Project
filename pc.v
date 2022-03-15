@@ -47,7 +47,10 @@ module pc(
 
 
     always_ff @(posedge CLK) begin
-        if(RESET) ps <= INC4;
+        if(RESET) begin
+            ps <= INC4;
+            IP <= 32'b0;
+        end
         else ps <= ns;
     end
 endmodule
