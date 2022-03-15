@@ -37,6 +37,7 @@ module pc(IP, PC_def, up_amt, b_taken, OP, CLK, RESET);
             JUMP: begin
                 IP <= $unsigned($signed(IP) + $signed(up_amt));
             end
+            default: IP <= PC_def;
         endcase
     end
 
