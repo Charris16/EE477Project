@@ -10,8 +10,8 @@ module decoder_unit(
 	u_imm20,
 	j_imm20
 	);
+
 	input logic [31:0] instruction;
-	
 	output logic [4:0] rs1;
 	output logic [4:0] rs2;
 	output logic [4:0] rd;
