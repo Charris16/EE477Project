@@ -1,6 +1,15 @@
 
-module decoder_unit(instruction, rs1, rs2, rd, i_imm12, s_imm12, b_imm12
-						, u_imm20, j_imm20);
+module decoder_unit(
+	instruction,
+	rs1,
+	rs2,
+	rd,
+	i_imm12,
+	s_imm12,
+	b_imm12,
+	u_imm20,
+	j_imm20
+	);
 	input logic [31:0] instruction;
 	
 	output logic [4:0] rs1;
