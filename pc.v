@@ -38,7 +38,7 @@ module pc(IP, PC_def, up_amt, b_taken, OP, CLK, RESET);
 
     always_ff @(posedge CLK) begin
         if(RESET) IP <= 32'b0;
-        else IP <= inc_amt;
+        else IP <= IP + inc_amt;
     end
 
     always_ff @(posedge CLK) begin
@@ -46,6 +46,7 @@ module pc(IP, PC_def, up_amt, b_taken, OP, CLK, RESET);
         else ps <= ns;
     end
 endmodule
+
 
 module pc_constant(IP, PC_def, up_amt, b_taken, OP, CLK, RESET);
     input logic [31:0] up_amt;
