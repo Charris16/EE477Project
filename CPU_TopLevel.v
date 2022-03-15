@@ -89,8 +89,6 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
         .CLK(CLK),
         .RESET(Reset)
         );
-
-    
     pipelineReg_32 INSTRUCTION_pipe1(INSTRUCTION_stage2, INSTRUCTION, CLK, Reset);
     pipelineReg_32 up_amt_pipe1(up_amt_stage2, up_amt, CLK, Reset);
     pipelineReg_32 PC_def_pipe1(PC_def_stage2, PC_def, CLK, Reset);
@@ -108,14 +106,11 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     pipelineReg_5 rd_addr2_pipe1(rd_addr2_stage2, rs2, CLK, Reset);
     pipelineReg_5 wr_addr_pipe1(wr_addr_stage2, rd, CLK, Reset);
 
-    pipelineReg_1 rd_en1_pipe1(rd_en1_stage2, rd_en1, CLK, Reset);
-    pipelineReg_1 rd_en2_pipe1(rd_en2_stage2, rd_en2, CLK, Reset);
-
     control_unit con_unit(
         .instruction(INSTRUCTION_stage2),
         .useBr(branch_taken), // comes from the branch control module
-        .rs1Sel(unused_1), // selects rs1 input for alu
-        .rs2Sel(unused_2), // selects rs2 input for alu
+        .rs1_en(rd_en1_stage2), // selects rs1 input for alu
+        .rs2_en(rd_en2_stage2), // selects rs2 input for alu
         .brOrJmp(brOrJmp), // selects whether to take b or j type immediate for adding to pc
         .wbSel(wbSel), // selects which data source to write back to regfile from
         .brUsed(brUsed), // indicated branch or jump happened

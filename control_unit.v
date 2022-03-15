@@ -4,8 +4,8 @@ module control_unit (
     input [31:0] instruction,
     input useBr, // comes from the branch control module
     
-    output logic [1:0] rs1Sel, // selects rs1 input for alu
-    output logic [1:0] rs2Sel, // selects rs2 input for alu
+    output logic rs1_en, // selects rs1 input for alu
+    output logic rs2_en, // selects rs2 input for alu
     output logic brOrJmp, // selects whether to take b or j type immediate for adding to pc
     output logic [1:0] wbSel, // selects which data source to write back to regfile from
     output logic brUsed, // indicated branch or jump happened
@@ -21,8 +21,8 @@ module control_unit (
     always_comb begin
         case (instruction[6:0])
         `OPC_LUI: begin
-            rs1Sel = 2'b00; //
-            rs2Sel = 2'b00; //
+            rs1_en = 1'b0; //
+            rs2_en = 1'b0; //
             brOrJmp = 1'b0; //
             wbSel = 2'b11;
             brUsed = 1'b0; //
@@ -33,8 +33,8 @@ module control_unit (
 			funcMem = 3'b000;
         end
         `OPC_AUIPC: begin
-            rs1Sel = 2'b00;
-            rs2Sel = 2'b00;
+            rs1_en = 1'b0;
+            rs2_en = 1'b0;
             brOrJmp = 1'b0; //
             wbSel = 2'b01;
             brUsed = 1'b0; //
@@ -45,8 +45,8 @@ module control_unit (
             funcMem = 3'b000;
         end
         `OPC_JAL: begin
-            rs1Sel = 2'b00; //
-            rs2Sel = 2'b00; //
+            rs1_en = 1'b0; //
+            rs2_en = 1'b0; //
             brOrJmp = 1'b1;
             wbSel = 2'b00;
             brUsed = 1'b0;
@@ -57,8 +57,8 @@ module control_unit (
             funcMem = 3'b000;
         end
         `OPC_JALR: begin
-            rs1Sel = 2'b01;
-            rs2Sel = 2'b10;
+            rs1_en = 1'b1;
+            rs2_en = 1'b0;
             brOrJmp = 1'b0; //
             wbSel = 2'b00;
             brUsed = 1'b1;
@@ -69,8 +69,8 @@ module control_unit (
             funcMem = 3'b000;
         end
         `OPC_BRANCH: begin
-            rs1Sel = 2'b00; //
-            rs2Sel = 2'b00; //
+            rs1_en = 1'b1; //
+            rs2_en = 1'b1; //
             brOrJmp = 1'b0;
             wbSel = 2'b00; //
             brUsed = 1'b0;
@@ -81,8 +81,8 @@ module control_unit (
             funcMem = 3'b000;
         end
         `OPC_STORE: begin
-            rs1Sel = 2'b01;
-            rs2Sel = 2'b01;
+            rs1_en = 1'b1;
+            rs2_en = 1'b1;
             brOrJmp = 1'b0;
             wbSel = 2'b00;
             brUsed = 1'b0;
@@ -93,8 +93,8 @@ module control_unit (
             funcMem = instruction[14:12];
         end
         `OPC_LOAD: begin
-            rs1Sel = 2'b01;
-            rs2Sel = 2'b10;
+            rs1_en = 1'b1;
+            rs2_en = 1'b0;
             brOrJmp = 1'b0; //
             wbSel = 2'b10;
             brUsed = 1'b0; //
@@ -105,8 +105,8 @@ module control_unit (
             funcMem = instruction[14:12];
         end
         `OPC_ARI_RTYPE: begin
-            rs1Sel = 2'b01;
-            rs2Sel = 2'b11;
+            rs1_en = 1'b1;
+            rs2_en = 1'b1;
             brOrJmp = 1'b0; //
             wbSel = 2'b01;
             brUsed = 1'b0; //
@@ -117,8 +117,8 @@ module control_unit (
             funcMem = 3'b000;
         end
         `OPC_ARI_ITYPE: begin
-            rs1Sel = 2'b01;
-            rs2Sel = 2'b10;
+            rs1_en = 1'b1;
+            rs2_en = 1'b1;
             brOrJmp = 1'b0; //
             wbSel = 2'b01;
             brUsed = 1'b0; //
@@ -129,8 +129,8 @@ module control_unit (
             funcMem = 3'b000;
         end
         default: begin
-            rs1Sel = 2'b00;
-            rs2Sel = 2'b00;
+            rs1_en = 1'b0;
+            rs2_en = 1'b0;
             brOrJmp = 1'b0;
             wbSel = 2'b00;
             brUsed = 1'b0;
