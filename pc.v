@@ -15,13 +15,14 @@ module pc(
 
     assign PC_def = IP + 32'd4;
     
+    logic stall_pc;
+    assign stall_pc = (OP == 7'b1101111) | (OP == 7'b1100111) | (OP == 7'b1100011);
+
     enum {INC4, STALL} ps, ns;
     always_comb begin
         case(ps)
             INC4: begin
-                if (OP == 7'b1101111) ns = STALL;
-                else if (OP == 7'b1100111) ns = STALL;
-                else if (OP == 7'b1100011) ns = STALL;
+                if(stall_pc) ns = STALL;
                 else ns = INC4;
             end
             STALL: begin
@@ -33,7 +34,10 @@ module pc(
     always_ff @(posedge CLK) begin
         IP <= 32'b0;
         case(ps)
-            INC4: IP <= RESET ? 32'b0 : IP + 32'd4;
+            INC4: begin
+                if(RESET) IP <= 32'b0;
+                else IP <= stall_pc ? IP : IP + 32'd4;
+            end
             STALL: IP <= b_taken ? IP + up_amt : IP + 32'd4;
         endcase
     end
