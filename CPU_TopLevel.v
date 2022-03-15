@@ -7,16 +7,11 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     
     //  Stage 1 Signals
     logic [31:0] up_amt, up_amt_stage2, PC_def;  //  up_amt is delayed to arive on time with stall, Might not be needed
-    logic [19:0] u_imm20,j_imm20;
-    logic [19:0] j_imm20_stage2;
+    logic [19:0] u_imm20, j_imm20;
     logic [11:0] IMM12, i_imm12, s_imm12, b_imm12;
     logic [11:0] b_imm12_stage2;
-    logic [8:0] func7;
     logic [6:0] OPCODE;
-    logic [2:0] func3;
-	logic rd_en1, rd_en2;
 	logic [4:0] rs1, rs2, rd;
-    logic [1:0] unused_1, unused_2;
     logic sto;
     
     //  Stage 2 Signals
@@ -33,7 +28,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
 	
     //  Stage 3 Signals
     logic [31:0] Memory_Load; //  Loaded Data From Memory
-    logic [31:0] ALU_OUT, reg_wr_data, stage3_data, const_data, Out_Stage3;
+    logic [31:0] ALU_OUT, reg_wr_data, Out_Stage3;
     logic [31:0] rd_data1_stage3, rd_data2_stage3, PC_def_stage3, PC_stage3;
     logic [11:0] IMM12_stage3;
     logic [6:0] OPCODE_stage3;
@@ -43,8 +38,6 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     logic load_stage3, sto_stage3;
 
     //  Garbage Signals
-    logic unused_3;
-    logic [2:0] unused_4;
     logic [1:0] wbSel;
 
 
@@ -68,8 +61,6 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
         .b_imm12(b_imm12), 
         .u_imm20(u_imm20), 
         .j_imm20(j_imm20), 
-        .func3(func3), 
-        .func7(func7)
         );
 
     logic [31:0] j_imm32, b_imm32;
@@ -94,9 +85,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     pipelineReg_32 PC_def_pipe1(PC_def_stage2, PC_def, CLK, Reset);
     pipelineReg_32 AUIPC_pipe1(PC_stage2, Instr_Addr, CLK, Reset);
 
-    pipelineReg_20 j_imma_pipe1(j_imm20_stage2, j_imm20, CLK, Reset);
     pipelineReg_20 U_imma_pipe1(u_imm20_stage2, u_imm20, CLK, Reset);
-   
     pipelineReg_12 IMM12_pipe1(IMM12_stage2, IMM12, CLK, Reset);
     pipelineReg_12 B_imm12_pipe1(b_imm12_stage2, b_imm12, CLK, Reset);
     
@@ -206,14 +195,6 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
         .OPCODE(OPCODE_stage3),
         .func3(funcMem_stage3)
         );
-
-    // logic [31:0] SLT_OUT_STAGE3;
-    // SLT_OP SLT_LOGIC(
-    //     .OUT(SLT_OUT_STAGE3),
-    //     .FUNC3(FUNCT3_stage3),
-    //     .RS1_DATA(rd_data1_stage3),
-    //     .RS2_DATA(rd_data2_stage3)
-    //     );
 
     ALU_OUT_SEL regWriteSelector(
         .REG_WRITE_DATA(reg_wr_data),
