@@ -39,7 +39,11 @@ module MemControler(MEM_wr_data, Load_data, xfer_size, load, store, regData, MEM
                 xfer_size = 3'd2;
                 if (load) begin Load_data = {{16{1'b0}}, MEM_rd_data[15:0]}; MEM_wr_data = 32'b0; end
                 else begin  Load_data = 32'b0; MEM_wr_data = 32'b0; end
-            end  
+            end 
+            default: begin
+                xfer_size = 3'b0;
+                Load_data = 32'b0;
+            end 
         endcase
     end
 
