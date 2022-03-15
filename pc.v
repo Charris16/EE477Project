@@ -28,6 +28,7 @@ module pc(
             STALL: begin
                 ns = INC4;
             end
+            default ns = INC4;
         endcase
     end
 
