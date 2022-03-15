@@ -10,7 +10,7 @@ module CPU_tb();
         .instruction(instruction),
         .clk(CLK)
         );
-    CPU_TopLevel CPU0(
+    CPU_TopLevel CPU_TopLevel0(
         .Instr_Addr(Instr_Addr),
         .MEM_addr(MEM_addr),
         .MEM_WR_out(MEM_WR_out),
@@ -38,6 +38,7 @@ module CPU_tb();
     end
 
     initial begin
+	$sdf_annotate("./CPU_TopLevel.syn.sdf", CPU_TopLevel0);
         $vcdpluson;
         $dumpvars();
 	    Reset <= 1'b1; @(posedge CLK);
