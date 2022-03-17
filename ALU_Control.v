@@ -48,14 +48,16 @@ module ALU_Control (
             default: begin ALU_EN = 1'b0; INTEM = 1'b0; LUI = 1'b0; APUIC = 1'b0; end
         endcase
     end
-
-    always_comb begin
-        case(FUNCT3)
-            3'b001: shift_op = 1'b1;
-            3'b101: shift_op = 1'b1;
-            default : shift_op = 1'b0;
-        endcase
-    end
+    assign shift_op = ((FUNCT3 == 3'b001) | (FUNCT3 == 3'b101));
+    // always_comb begin
+    //     case(FUNCT3)
+    //         3'b001: shift_op = 1'b1;
+    //         3'b101: shift_op = 1'b1;
+    //         default : shift_op = 1'b0;
+    //     endcase
+    //     if ((FUNCT3 == 3'b001) | (FUNCT3 == 3'b001)) shift_op = 1'b1;
+    //     else
+    // end
     logic [31:0] const_swap, IMM_val, LUI_base;
     assign IMM_val = (LUI | APUIC) ? U_IMM32 : IMM32;
     assign const_swap = (shift_op & ~INTEM)? {27'b0, RS2} : IMM_val;
