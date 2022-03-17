@@ -26,8 +26,8 @@ module MemControler(MEM_wr_data, Load_data, xfer_size, load, store, regData, MEM
             end
             3'b010: begin  // LW SW
                 xfer_size = 3'd4;
-                if (load) begin Load_data = { {16{MEM_rd_data[15]}}, MEM_rd_data[15:0]}; MEM_wr_data = 32'b0; end
-                else if (store) begin Load_data = 32'b0; MEM_wr_data = {{16{regData[15]}}, regData[15:0]}; end
+                if (load) begin Load_data = MEM_rd_data; MEM_wr_data = 32'b0; end
+                else if (store) begin Load_data = 32'b0; MEM_wr_data = regData; end
                 else begin Load_data = 32'b0; MEM_wr_data = 32'b0; end
             end  
             3'b100: begin // LBU

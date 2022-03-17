@@ -21,6 +21,8 @@ module decoder_unit(
 	output logic [19:0] u_imm20;
 	output logic [19:0] j_imm20;
 	
+	logic [6:0] OPCODE;
+	assign OPCODE = instruction[6:0];
 
 	assign rs1 = instruction[19:15];
 	assign rs2 = instruction[24:20];
