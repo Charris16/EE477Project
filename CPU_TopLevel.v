@@ -71,7 +71,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     assign up_amt = (OPCODE == 7'b1101111) ? j_imm32 : b_imm32;
     assign IMM12 = sto ? s_imm12 : i_imm12;
 
-    pc_constant Program_Counter(
+    pc Program_Counter(
         .IP(Instr_Addr),
         .PC_def(PC_def),
         .up_amt(up_amt_stage2),
