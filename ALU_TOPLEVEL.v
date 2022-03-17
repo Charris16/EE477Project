@@ -1,11 +1,13 @@
 module ALU_32b(
     ALU_OUT,
-    // FLAG_REG,
     RS1_DATA,
     RS2_DATA,
-    PC, U_IMM20,
-    RS2, IMM12,
-    OPCODE,FUNCT3,
+    PC,
+    U_IMM20,
+    RS2,
+    IMM12,
+    OPCODE,
+    FUNCT3,
     FUNCT1
     );
 
@@ -23,12 +25,27 @@ module ALU_32b(
     logic [31:0] DATA0, DATA1;
     logic ALU_EN;
 
-    ALU_Control CONTROL_UNIT(DATA0, DATA1, ALU_EN, RS1_DATA, RS2_DATA, PC, U_IMM20, RS2, IMM12, OPCODE, FUNCT3);
-    ALU_DataPath DATAPATH(ALU_OUT, DATA0, DATA1, FUNCT3, FUNCT1, ALU_EN);
+    ALU_Control CONTROL_UNIT(
+        .DATA0(DATA0),
+        .DATA1(DATA1),
+        .ALU_EN(ALU_EN),
+        .RS1_DATA(RS1_DATA),
+        .RS2_DATA(RS2_DATA),
+        .PC(PC),
+        .U_IMM20(U_IMM20),
+        .RS2(RS2),
+        .IMM12(IMM12),
+        .OPCODE(OPCODE),
+        .FUNCT3(FUNCT3)
+        );
+    ALU_DataPath DATAPATH(
+        .OUT(ALU_OUT),
+        .IN0(DATA0),
+        .IN1(DATA1),
+        .FUNC3(FUNCT3),
+        .SUB(FUNCT1),
+        .ALU_EN(ALU_EN)
+        );
 
-    // always_ff @(posedge CLK) begin
-    //     if (ALU_EN) FLAG_REG <= FLAGS;
-    //     else FLAG_REG <= FLAG_REG;
-    // end
 
 endmodule

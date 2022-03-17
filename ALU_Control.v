@@ -4,7 +4,8 @@ module ALU_Control (
     ALU_EN,
     RS1_DATA,
     RS2_DATA,
-    PC, U_IMM20,
+    PC,
+    U_IMM20,
     RS2,
     IMM12,
     OPCODE,
@@ -64,29 +65,14 @@ module ALU_Control (
 
 endmodule
 
-// module bitExtend #(parameter N = 12, parameter MAX = 32) (EXTENDED, DATA);
-//     input logic [N-1:0] DATA;
-//     output logic [MAX-1:0] EXTENDED;
-//     assign EXTENDED = {'b0, DATA};
-// endmodule
-
-// module signExtend #(parameter N = 12, parameter MAX = 32) (EXTENDED, DATA);
-//     input logic signed [N-1:0] DATA;
-//     output logic signed [MAX-1:0] EXTENDED;
-//     // assign EXTENDED = {{MAX-N{DATA[N-1]}}, DATA};
-//     assign EXTENDED = $signed(DATA);
-// endmodule
-
 module signExtend_20 (EXTENDED, DATA);
     input logic signed [19:0] DATA;
     output logic signed [31:0] EXTENDED;
-    // assign EXTENDED = {{MAX-N{DATA[N-1]}}, DATA};
     assign EXTENDED = 32'(signed'(DATA));
 endmodule
 
 module signExtend_12 (EXTENDED, DATA);
     input logic signed [11:0] DATA;
     output logic signed [31:0] EXTENDED;
-    // assign EXTENDED = {{MAX-N{DATA[N-1]}}, DATA};
     assign EXTENDED = 32'(signed'(DATA));
 endmodule
