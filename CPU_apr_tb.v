@@ -31,7 +31,7 @@ module CPU_tb();
         .xfer_size(MEM_type),
         .read_data(MEM_data)
 	    );
-    parameter clock_period = 10;
+    parameter clock_period = 20;
     initial begin
         CLK <=1'b0;
         forever #clock_period CLK <= ~CLK;
