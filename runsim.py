@@ -57,7 +57,7 @@ while(1):
         print("Running VCS")
         
         main = subprocess.call(["vcs", "-f", "cpu.include", "+v2k","-R", "+lint", "-sverilog", "-full64", "-debug_pp", "-timescale=1ns/10ps", "-l", "cpu.log"])
-        main.wait()
+        main = subprocess.call(["dve", "-full64", "-vpd" , "vcdplus.vpd"])
 
         print("_____________________________________________")
         u_in = input("Any Key to continue q to quit")
