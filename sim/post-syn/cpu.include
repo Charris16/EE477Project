@@ -1,6 +1,6 @@
 /home/lab.apps/vlsiapps/kits/tsmc/N65RF/1.0c_cdb/digital/Front_End/verilog/tcbn65gplus_140b/tcbn65gplus.v
-./CPU_TopLevel.syn.v
-./CPU_syn_tb.v
-./IMEM.v
-./MEM.v
+./../../syn/CPU_TopLevel.syn.v
+./../../verilog/CPU_syn_tb.v
+./../../verilog/IMEM.v
+./../../verilog/MEM.v
 

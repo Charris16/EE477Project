@@ -39,7 +39,7 @@ while(1):
     else:
         print("_____________________________________________")
         print("Setting up Test:", run_test)
-        tb_file = open("IMEM.v", 'r') 
+        tb_file = open("verilog/IMEM.v", 'r') 
         if not tb_file.readable():
             print("-------ERROR Cant Find IMEM.v -----------")
             print("-------Shutting  Down-----------")
