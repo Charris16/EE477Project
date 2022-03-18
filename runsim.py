@@ -2,7 +2,8 @@ import subprocess
 import os
 
 print("Setting up Environment")
-os.system("tcsh")
+#os.system("tcsh")
+os.system("echo $0")
 os.system("setenv EDA_TOOLS_PATH /home/lab.apps/vlsiapps_new/")
 os.system("set path = (/home/lab.apps/vlsiapps_new/icc2/current/bin $path)")
 os.system("source /home/lab.apps/vlsiapps_new/cshrc/general.cshrc")
