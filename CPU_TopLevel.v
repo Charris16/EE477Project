@@ -65,8 +65,8 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     logic [31:0] j_imm32, b_imm32;
     assign j_imm32 = {{12{j_imm20[19]}}, j_imm20[19:0]} << 1;
     assign b_imm32 = {{20{b_imm12[11]}}, b_imm12[11:0]} << 1;
-    // assign up_amt = (OPCODE == 7'b1101111) ? j_imm32 : b_imm32;
-    assign up_amt = branch_taken ? j_imm32 : b_imm32;
+    assign up_amt = (OPCODE == 7'b1101111) ? j_imm32 : b_imm32;
+    // assign up_amt = branch_taken ? j_imm32 : b_imm32;
     assign sto = (OPCODE == 7'b0100011);
     assign IMM12 = sto ? s_imm12 : i_imm12;
 
