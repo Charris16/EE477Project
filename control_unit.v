@@ -1,7 +1,9 @@
 `include "opcode.vh"
 
 module control_unit (
-    input [31:0] instruction,
+    input logic [6:0] OPCODE,
+    input logic [2:0] f3,
+    input logic f1,
     input useBr, // comes from the branch control module
     
     output logic rs1_en, // selects rs1 input for alu
@@ -19,7 +21,7 @@ module control_unit (
 
 
     always_comb begin
-        case (instruction[6:0])
+        case (OPCODE)
         `OPC_LUI: begin
             rs1_en = 1'b0; //
             rs2_en = 1'b0; //
@@ -75,7 +77,7 @@ module control_unit (
             wbSel = 2'b00; //
             brUsed = 1'b0;
             br_useJalr = (useBr) ? 1'b1 : 1'b0;
-            func3 = instruction[14:12]; //
+            func3 = f3; //
             func1 = 1'b0; //
             regWrite = 1'b0;
             funcMem = 3'b000;
@@ -90,7 +92,7 @@ module control_unit (
             func3 = `FNC_ADD_SUB;
             func1 = `FNC2_ADD;
             regWrite = 1'b0;
-            funcMem = instruction[14:12];
+            funcMem = f3;
         end
         `OPC_LOAD: begin
             rs1_en = 1'b1;
@@ -102,7 +104,7 @@ module control_unit (
             func3 = `FNC_ADD_SUB;
             func1 = `FNC2_ADD;
             regWrite = 1'b1;
-            funcMem = instruction[14:12];
+            funcMem = f3;
         end
         `OPC_ARI_RTYPE: begin
             rs1_en = 1'b1;
@@ -111,8 +113,8 @@ module control_unit (
             wbSel = 2'b01;
             brUsed = 1'b0; //
             br_useJalr = 1'b0;
-            func3 = instruction[14:12];
-            func1 = instruction[30];
+            func3 = f3;
+            func1 = f1;
             regWrite = 1'b1;
             funcMem = 3'b000;
         end
@@ -123,8 +125,8 @@ module control_unit (
             wbSel = 2'b01;
             brUsed = 1'b0; //
             br_useJalr = 1'b0;
-            func3 = instruction[14:12];
-            func1 = (instruction[14:12] == `FNC_SRL_SRA) ? instruction[30] : 1'b0; // always 0 except for right shifts
+            func3 = f3
+            func1 = (f3 == `FNC_SRL_SRA) ? f1 : 1'b0; // always 0 except for right shifts
             regWrite = 1'b1;
             funcMem = 3'b000;
         end

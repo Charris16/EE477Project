@@ -12,7 +12,8 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     logic [11:0] b_imm12_stage2;
     logic [6:0] OPCODE;
 	logic [4:0] rs1, rs2, rd;
-    logic sto;
+    logic [2:0] func3;
+    logic sto, func1;
     
     //  Stage 2 Signals
     logic [31:0] rd_data1_stage2, rd_data2_stage2, rdata1_forward, rdata2_forward;
@@ -22,8 +23,8 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     logic [6:0] OPCODE_stage2;
     logic [4:0] wr_addr_stage2;
     logic [4:0] rd_addr1_stage2, rd_addr2_stage2;
-    logic [2:0] FUNCT3_stage2, funcMem;
-    logic FUNCT1_stage2, wr_en_stage2;
+    logic [2:0] FUNCT3_stage2, funcMem, f3_stage2;
+    logic FUNCT1_stage2, wr_en_stage2, f1_stage2;
 	logic rd_en1_stage2, rd_en2_stage2;
 	
     //  Stage 3 Signals
@@ -70,6 +71,8 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     // assign up_amt = (OPCODE == 7'b1101111) ? {{12{j_imm20[19]}}, j_imm20}<<1 : {{20{b_imm12[11]}}, b_imm12}<<1;
     assign up_amt = (OPCODE == 7'b1101111) ? j_imm32 : b_imm32;
     assign IMM12 = sto ? s_imm12 : i_imm12;
+    assign func3 = instruction[14:12];
+    assign func1 = instruction[30];
 
     pc Program_Counter(
         .IP(Instr_Addr),
@@ -80,7 +83,6 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
         .CLK(CLK),
         .RESET(Reset)
         );
-    pipelineReg_32 INSTRUCTION_pipe1(INSTRUCTION_stage2, INSTRUCTION, CLK, Reset);
     pipelineReg_32 up_amt_pipe1(up_amt_stage2, up_amt, CLK, Reset);
     pipelineReg_32 PC_def_pipe1(PC_def_stage2, PC_def, CLK, Reset);
     pipelineReg_32 AUIPC_pipe1(PC_stage2, Instr_Addr, CLK, Reset);
@@ -94,9 +96,15 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     pipelineReg_5 rd_addr1_pipe1(rd_addr1_stage2, rs1, CLK, Reset);
     pipelineReg_5 rd_addr2_pipe1(rd_addr2_stage2, rs2, CLK, Reset);
     pipelineReg_5 wr_addr_pipe1(wr_addr_stage2, rd, CLK, Reset);
+   
+    pipelineReg_3 func3_pipe1(f3_stage2, func3, CLK, Reset);
+    
+    pipelineReg_1 func3_pipe1(f1_stage2, func1, CLK, Reset);
 
     control_unit con_unit(
-        .instruction(INSTRUCTION_stage2),
+        .OPCODE(OPCODE_stage2),
+        .f3(f3_stage2),
+        .f1(f1_stage2),
         .useBr(branch_taken), // comes from the branch control module
         .rs1_en(rd_en1_stage2), // selects rs1 input for alu
         .rs2_en(rd_en2_stage2), // selects rs2 input for alu

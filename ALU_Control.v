@@ -70,11 +70,11 @@ endmodule
 module signExtend_20 (EXTENDED, DATA);
     input logic signed [19:0] DATA;
     output logic signed [31:0] EXTENDED;
-    assign EXTENDED = 32'(signed'(DATA));
+    assign EXTENDED = 32'($signed'(DATA));
 endmodule
 
 module signExtend_12 (EXTENDED, DATA);
     input logic signed [11:0] DATA;
     output logic signed [31:0] EXTENDED;
-    assign EXTENDED = 32'(signed'(DATA));
+    assign EXTENDED = 32'($signed'(DATA));
 endmodule
