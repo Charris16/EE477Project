@@ -38,10 +38,6 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     logic FUNCT1_stage3, wr_en_stage3;
     logic load_stage3, sto_stage3;
 
-    //  Garbage Signals
-    logic [1:0] wbSel;
-
-
     //  Sort of Live Outside of Pipeline Stages
     //  Branch Signals 
     logic inc_pc; //  Stage 2 branch sucess signal
@@ -110,7 +106,6 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
         .rs1_en(rd_en1_stage2), // selects rs1 input for alu
         .rs2_en(rd_en2_stage2), // selects rs2 input for alu
         .brOrJmp(brOrJmp), // selects whether to take b or j type immediate for adding to pc
-        .wbSel(wbSel), // selects which data source to write back to regfile from
         .brUsed(brUsed), // indicated branch or jump happened
         // .brOrJal(brOrJal), // selects whether to use b or jal for adding to pc 
         .br_useJalr(br_useJalr),

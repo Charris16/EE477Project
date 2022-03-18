@@ -9,7 +9,6 @@ module control_unit (
     output logic rs1_en, // selects rs1 input for alu
     output logic rs2_en, // selects rs2 input for alu
     output logic brOrJmp, // selects whether to take b or j type immediate for adding to pc
-    output logic [1:0] wbSel, // selects which data source to write back to regfile from
     output logic brUsed, // indicated branch or jump happened
     // output logic brOrJal, // selects whether to use b or jal for adding to pc 
     output logic br_useJalr,
@@ -26,7 +25,6 @@ module control_unit (
             rs1_en = 1'b0; //
             rs2_en = 1'b0; //
             brOrJmp = 1'b0; //
-            wbSel = 2'b11;
             brUsed = 1'b0; //
             br_useJalr = 1'b0;
             func3 = 3'b000; //
@@ -38,7 +36,6 @@ module control_unit (
             rs1_en = 1'b0;
             rs2_en = 1'b0;
             brOrJmp = 1'b0; //
-            wbSel = 2'b01;
             brUsed = 1'b0; //
             br_useJalr = 1'b0;
             func3 = `FNC_ADD_SUB;
@@ -50,7 +47,6 @@ module control_unit (
             rs1_en = 1'b0; //
             rs2_en = 1'b0; //
             brOrJmp = 1'b1;
-            wbSel = 2'b00;
             brUsed = 1'b0;
             br_useJalr = 1'b0;
             func3 = 3'b000; //
@@ -62,7 +58,6 @@ module control_unit (
             rs1_en = 1'b1;
             rs2_en = 1'b0;
             brOrJmp = 1'b0; //
-            wbSel = 2'b00;
             brUsed = 1'b1;
             br_useJalr = 1'b1;
             func3 = `FNC_ADD_SUB;
@@ -74,7 +69,6 @@ module control_unit (
             rs1_en = 1'b1; //
             rs2_en = 1'b1; //
             brOrJmp = 1'b0;
-            wbSel = 2'b00; //
             brUsed = 1'b0;
             br_useJalr = (useBr) ? 1'b1 : 1'b0;
             func3 = f3; //
@@ -86,7 +80,6 @@ module control_unit (
             rs1_en = 1'b1;
             rs2_en = 1'b1;
             brOrJmp = 1'b0;
-            wbSel = 2'b00;
             brUsed = 1'b0;
             br_useJalr = 1'b0;
             func3 = `FNC_ADD_SUB;
@@ -98,7 +91,6 @@ module control_unit (
             rs1_en = 1'b1;
             rs2_en = 1'b0;
             brOrJmp = 1'b0; //
-            wbSel = 2'b10;
             brUsed = 1'b0; //
             br_useJalr = 1'b0;
             func3 = `FNC_ADD_SUB;
@@ -110,7 +102,6 @@ module control_unit (
             rs1_en = 1'b1;
             rs2_en = 1'b1;
             brOrJmp = 1'b0; //
-            wbSel = 2'b01;
             brUsed = 1'b0; //
             br_useJalr = 1'b0;
             func3 = f3;
@@ -122,7 +113,6 @@ module control_unit (
             rs1_en = 1'b1;
             rs2_en = 1'b1;
             brOrJmp = 1'b0; //
-            wbSel = 2'b01;
             brUsed = 1'b0; //
             br_useJalr = 1'b0;
             func3 = f3;
@@ -134,7 +124,6 @@ module control_unit (
             rs1_en = 1'b0;
             rs2_en = 1'b0;
             brOrJmp = 1'b0;
-            wbSel = 2'b00;
             brUsed = 1'b0;
             br_useJalr = 1'b0;
             func3 = 3'b000;
