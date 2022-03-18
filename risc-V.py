@@ -1,6 +1,6 @@
 import sys
 global PC_addr
-
+print("-------Starting  Complilation------")
 if len(sys.argv) != 2:
     print("Error No File Passed")
     sys.exit(1)
@@ -206,9 +206,10 @@ def writeS_Type(s):
 def writeB_Type(s):
     op = "1100011"
     intem = toBin(s[1][2], 13)
+    print(intem)
     det.write(intem[0])
     det.write("_")
-    det.write(intem[2:7])
+    det.write(intem[2:8])
     det.write("_")
     det.write(toBin(s[1][1], 5))
     det.write("_")
@@ -321,6 +322,7 @@ while True:
         det.write("\n")
         PC_addr += 4
 print("-------Complete------")
+print()
 src.close()
 det.close()
 
