@@ -60,7 +60,7 @@ module ALU_Control (
     // end
     logic [31:0] const_swap, IMM_val, LUI_base;
     assign IMM_val = (LUI | APUIC) ? U_IMM32 : IMM32;
-    assign const_swap = (shift_op & ~INTEM)? RS2 : IMM_val;
+    assign const_swap = shift_op ? RS2 : IMM_val;
     assign LUI_base = APUIC ? PC : 32'b0;
     assign DATA0 = (APUIC | LUI) ? LUI_base : RS1_DATA;
     assign DATA1 = INTEM ? const_swap : RS2_DATA;
