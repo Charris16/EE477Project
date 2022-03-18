@@ -71,8 +71,8 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     // assign up_amt = (OPCODE == 7'b1101111) ? {{12{j_imm20[19]}}, j_imm20}<<1 : {{20{b_imm12[11]}}, b_imm12}<<1;
     assign up_amt = (OPCODE == 7'b1101111) ? j_imm32 : b_imm32;
     assign IMM12 = sto ? s_imm12 : i_imm12;
-    assign func3 = instruction[14:12];
-    assign func1 = instruction[30];
+    assign func3 = INSTRUCTION[14:12];
+    assign func1 = INSTRUCTION[30];
 
     pc Program_Counter(
         .IP(Instr_Addr),
@@ -99,7 +99,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
    
     pipelineReg_3 func3_pipe1(f3_stage2, func3, CLK, Reset);
     
-    pipelineReg_1 func3_pipe1(f1_stage2, func1, CLK, Reset);
+    pipelineReg_1 func1_pipe1(f1_stage2, func1, CLK, Reset);
 
     control_unit con_unit(
         .OPCODE(OPCODE_stage2),
