@@ -206,7 +206,6 @@ def writeS_Type(s):
 def writeB_Type(s):
     op = "1100011"
     intem = toBin(s[1][2], 13)
-    print(intem)
     det.write(intem[0])
     det.write("_")
     det.write(intem[2:8])

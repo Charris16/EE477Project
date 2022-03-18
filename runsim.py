@@ -60,7 +60,7 @@ while(1):
         main = subprocess.call(["dve", "-full64", "-vpd" , "vcdplus.vpd"])
 
         print("_____________________________________________")
-        u_in = input("Any Key to continue q to quit:  ")
+        u_in = input("Enter to continue q to quit:  ")
         if (u_in.lower() == 'q'):
             print("-------Shutting  Down-----------")
             exit(0)
