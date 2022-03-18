@@ -2,7 +2,7 @@ import subprocess
 import os
 
 print("Setting up Environment")
-os.system("tcsh")
+# os.system("tcsh")
 os.system("setenv EDA_TOOLS_PATH /home/lab.apps/vlsiapps_new/")
 os.system("set path = (/home/lab.apps/vlsiapps_new/icc2/current/bin $path)")
 os.system("source /home/lab.apps/vlsiapps_new/cshrc/general.cshrc")
@@ -55,7 +55,7 @@ while(1):
         print("_____________________________________________")
         print("Running VCS")
         
-        main = subprocess.Popen(["vcs", "-f", "cpu.include", "+v2k","-R", "+lint", "-sverilog", "-full64", "-debug_pp", "-timescale=1ns/10ps", "-l", "cpu.log"])
+        main = subprocess.call(["vcs", "-f", "cpu.include", "+v2k","-R", "+lint", "-sverilog", "-full64", "-debug_pp", "-timescale=1ns/10ps", "-l", "cpu.log"])
         main.wait()
 
         print("_____________________________________________")
