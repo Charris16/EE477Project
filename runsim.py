@@ -10,7 +10,7 @@ import os
 print("_____________________________________________")
 while(1):
     test_in = input("Testname to run: ")
-    test_list = os.listdir("bin/")
+    test_list = os.listdir("../../bin/")
     found = False
     run_test = ""
     test_in = test_in.lower()
@@ -39,7 +39,7 @@ while(1):
     else:
         print("_____________________________________________")
         print("Setting up Test:", run_test)
-        tb_file = open("verilog/IMEM.v", 'r') 
+        tb_file = open("../../verilog/IMEM.v", 'r') 
         if not tb_file.readable():
             print("-------ERROR Cant Find IMEM.v -----------")
             print("-------Shutting  Down-----------")
@@ -49,7 +49,7 @@ while(1):
             print("Removing Header")
             file_lines[0] = "`define BENCHMARK \"bin/" + run_test + "\"\n"
         tb_file.close()
-        tb_file = open("IMEM.v", 'w') 
+        tb_file = open("../../verilog/IMEM.v", 'w') 
         for line in file_lines:
             tb_file.write(line)
         tb_file.close()
