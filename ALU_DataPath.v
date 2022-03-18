@@ -89,7 +89,9 @@ module shifter(OUT, DIN, SHAMT, FUNC3, FUNC1); // SRA CURRENTLY BROKEN
     always_comb begin
         case (FUNC3)
             3'b001: OUT = DIN << SHAMT;
-            3'b101: OUT = $unsigned(FUNC1 ? $signed(DIN) >>> SHAMT : DIN >> SHAMT);
+            // 3'b101: OUT = $unsigned(FUNC1 ? $signed(DIN) >>> SHAMT : DIN >> SHAMT);
+            3'b101: if (FUNC1) OUT = $unsigned($signed(DIN) >>> SHAMT);
+                    else OUT = DIN >> SHAMT;
             default: OUT = 32'b0;
         endcase
     end
