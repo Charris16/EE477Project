@@ -1,10 +1,12 @@
 import subprocess
 import os
 
+print("Setting up Environment")
 os.system("exec tcsh")
 os.system("setenv EDA_TOOLS_PATH /home/lab.apps/vlsiapps_new/")
 os.system("set path = (/home/lab.apps/vlsiapps_new/icc2/current/bin $path)")
 os.system("source /home/lab.apps/vlsiapps_new/cshrc/general.cshrc")
+print("_____________________________________________")
 while(1):
     test_in = input("Testname to run: ")
     test_list = os.listdir("bin/")
