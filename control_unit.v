@@ -125,7 +125,7 @@ module control_unit (
             wbSel = 2'b01;
             brUsed = 1'b0; //
             br_useJalr = 1'b0;
-            func3 = f3
+            func3 = f3;
             func1 = (f3 == `FNC_SRL_SRA) ? f1 : 1'b0; // always 0 except for right shifts
             regWrite = 1'b1;
             funcMem = 3'b000;
