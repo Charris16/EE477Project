@@ -46,9 +46,9 @@ while(1):
             print("-------Shutting  Down-----------")
             exit(1)
         file_lines = tb_file.readlines()
-        if "`define BENCHMARK \"bin/" in file_lines[0]:
+        if "`define BENCHMARK \"../../bin/" in file_lines[0]:
             print("Removing Header")
-            file_lines[0] = "`define BENCHMARK \"bin/" + run_test + "\"\n"
+            file_lines[0] = "`define BENCHMARK \"../../bin/" + run_test + "\"\n"
         tb_file.close()
         tb_file = open("../../verilog/IMEM.v", 'w') 
         for line in file_lines:

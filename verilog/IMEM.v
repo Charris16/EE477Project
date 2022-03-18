@@ -3,7 +3,7 @@
 // two words of the address must be 0).
 //
 // To change the file that is loaded, edit the filename here:
-`define BENCHMARK "bin/SLT.bin"
+`define BENCHMARK "../../bin/SLT.bin"
 
 `timescale 1ns/10ps
 
