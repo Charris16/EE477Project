@@ -13,7 +13,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     logic [6:0] OPCODE;
 	logic [4:0] rs1, rs2, rd;
     logic [2:0] func3;
-    logic sto, func1;
+    logic func1;
     
     //  Stage 2 Signals
     logic [31:0] rd_data1_stage2, rd_data2_stage2, rdata1_forward, rdata2_forward;
@@ -66,9 +66,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     assign j_imm32 = {{12{j_imm20[19]}}, j_imm20[19:0]} << 1;
     assign b_imm32 = {{20{b_imm12[11]}}, b_imm12[11:0]} << 1;
     assign up_amt = (OPCODE == 7'b1101111) ? j_imm32 : b_imm32;
-    // assign up_amt = branch_taken ? j_imm32 : b_imm32;
-    assign sto = (OPCODE == 7'b0100011);
-    assign IMM12 = sto ? s_imm12 : i_imm12;
+    assign IMM12 = (OPCODE == 7'b0100011) ? s_imm12 : i_imm12;
 
     pc Program_Counter(
         .IP(Instr_Addr),
