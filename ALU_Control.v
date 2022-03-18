@@ -68,13 +68,13 @@ module ALU_Control (
 endmodule
 
 module signExtend_20 (EXTENDED, DATA);
-    input logic signed [19:0] DATA;
-    output logic signed [31:0] EXTENDED;
-    assign EXTENDED = 32'(signed'(DATA));
+    input logic [19:0] DATA;
+    output logic [31:0] EXTENDED;
+    assign EXTENDED = {{12{DATA[19]}}, DATA[19:0]};
 endmodule
 
 module signExtend_12 (EXTENDED, DATA);
-    input logic signed [11:0] DATA;
-    output logic signed [31:0] EXTENDED;
-    assign EXTENDED = 32'(signed'(DATA));
+    input logic [11:0] DATA;
+    output logic [31:0] EXTENDED;
+    assign EXTENDED = {{20{DATA[11]}}, DATA[11:0]};
 endmodule
