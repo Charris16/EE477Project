@@ -1,9 +1,9 @@
+`define BENCHMARK "../../bin/SLT.bin"
 // Instruction ROM.  Supports reads only, but is initialized based upon the file specified.
 // All accesses are 32-bit.  Addresses are byte-addresses, and must be word-aligned (bottom
 // two words of the address must be 0).
 //
 // To change the file that is loaded, edit the filename here:
-`define BENCHMARK "../../bin/SLT.bin"
 
 `timescale 1ns/10ps
 
