@@ -14,8 +14,8 @@ module ALU_DataPath (
     
     output logic [31:0] OUT;
 
-    logic [31:0] ADDER_OUT, SHIFT_OUT, SLT_OUT;
-    logic ADDER_EN;
+    logic [31:0] ADDER_OUT, SHIFT_OUT;
+    logic ADDER_EN, SLT_OUT;
     logic C_FLAG, X_FLAG, Z_FLAG, N_FLAG;
 
     ADDER ADD_PATH(ADDER_OUT, C_FLAG, X_FLAG, IN0, IN1, SUB);
@@ -34,8 +34,8 @@ module ALU_DataPath (
             3'b000: OUT = ALU_EN ? ADDER_OUT : 32'b0;  // ADD SUB / ADDI
             
             // SLT and SLTU
-            3'b010: OUT = ALU_EN ? SLT_OUT : 32'b0;  // SLT / SLTI
-            3'b011: OUT = ALU_EN ? SLT_OUT : 32'b0;  // SLTU / SLTUI
+            3'b010: OUT = ALU_EN ? {31'b0, SLT_OUT} : 32'b0;  // SLT / SLTI
+            3'b011: OUT = ALU_EN ? {31'b0, SLT_OUT} : 32'b0;  // SLTU / SLTUI
             
             // LOGIC CASES
             3'b100: OUT = ALU_EN ? (IN0 ^ IN1) : 32'b0; // XOR / XORI
