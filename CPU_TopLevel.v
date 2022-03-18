@@ -64,9 +64,11 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
 
     logic [31:0] j_imm32, b_imm32;
 
-    signExtend_20 j_EXTEND(j_imm32, j_imm20 << 1);
-    signExtend_12 b_EXTEND(b_imm32, b_imm12 << 1);
-    // assign up_amt = (OPCODE == 7'b1101111) ? {{12{j_imm20[19]}}, j_imm20}<<1 : {{20{b_imm12[11]}}, b_imm12}<<1;
+    // signExtend_20 j_EXTEND(j_imm32, j_imm20 << 1);
+    // signExtend_12 b_EXTEND(b_imm32, b_imm12 << 1);
+    assign j_imm32 = {{12{j_imm20[19]}}, j_imm20[19:0]} << 1;
+    assign b_imm32 = {{20{b_imm12[11]}}, b_imm12[11:0]} << 1;
+
     assign up_amt = (OPCODE == 7'b1101111) ? j_imm32 : b_imm32;
     assign IMM12 = sto ? s_imm12 : i_imm12;
     assign sto = (OPCODE == 7'b0100011);
