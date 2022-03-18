@@ -35,7 +35,7 @@ module decoder_unit(
 	assign rs2 = instruction[24:20];
 	assign rd  = instruction[11:7];
 	assign i_imm12 = instruction[31:20];
-	assign s_imm12 = {instruction[30:25], instruction[11:7]};
+	assign s_imm12 = {instruction[31:25], instruction[11:7]};
 	assign b_imm12 = {instruction[31], instruction[7], instruction[30:25], instruction[11:8]};
 	assign u_imm20 = instruction[31:12];
 	assign j_imm20 = {instruction[31], instruction[19:12], instruction[20], instruction[30:21]};
