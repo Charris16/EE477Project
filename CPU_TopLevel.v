@@ -9,7 +9,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     logic [31:0] up_amt, up_amt_stage2, PC_def;  //  up_amt is delayed to arive on time with stall, Might not be needed
     logic [19:0] u_imm20, j_imm20;
     logic [11:0] IMM12, i_imm12, s_imm12, b_imm12;
-    logic [11:0] b_imm12_stage2;
+    // logic [11:0] b_imm12_stage2;
     logic [6:0] OPCODE;
 	logic [4:0] rs1, rs2, rd;
     logic [2:0] func3;
@@ -85,7 +85,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
 
     pipelineReg_20 U_imma_pipe1(u_imm20_stage2, u_imm20, CLK, Reset);
     pipelineReg_12 IMM12_pipe1(IMM12_stage2, IMM12, CLK, Reset);
-    pipelineReg_12 B_imm12_pipe1(b_imm12_stage2, b_imm12, CLK, Reset);
+    // pipelineReg_12 B_imm12_pipe1(b_imm12_stage2, b_imm12, CLK, Reset);
     
     pipelineReg_7 OPCODE_pipe1(OPCODE_stage2, OPCODE, CLK, Reset);
     
