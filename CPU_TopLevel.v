@@ -49,19 +49,21 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     logic brOrJmp, brUsed;
     // logic brOrJal;
     
-    assign OPCODE = INSTRUCTION[6:0];
-    assign sto = (OPCODE == 7'b0100011);
+    
 
     decoder_unit dec_unit(
         .rs1(rs1),
         .rs2(rs2),
         .rd(rd),
+        .OPCODE(OPCODE),
+        .func3(func3),
+        .func1(func1),
         .i_imm12(i_imm12),
         .s_imm12(s_imm12), 
         .b_imm12(b_imm12), 
         .u_imm20(u_imm20), 
         .j_imm20(j_imm20),
-        .instruction(INSTRUCTION)
+        .instruction(INSTRUCTION),
         );
 
     logic [31:0] j_imm32, b_imm32;
@@ -71,8 +73,7 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     // assign up_amt = (OPCODE == 7'b1101111) ? {{12{j_imm20[19]}}, j_imm20}<<1 : {{20{b_imm12[11]}}, b_imm12}<<1;
     assign up_amt = (OPCODE == 7'b1101111) ? j_imm32 : b_imm32;
     assign IMM12 = sto ? s_imm12 : i_imm12;
-    assign func3 = INSTRUCTION[14:12];
-    assign func1 = INSTRUCTION[30];
+    assign sto = (OPCODE == 7'b0100011);
 
     pc Program_Counter(
         .IP(Instr_Addr),

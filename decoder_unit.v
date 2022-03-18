@@ -8,7 +8,10 @@ module decoder_unit(
 	s_imm12,
 	b_imm12,
 	u_imm20,
-	j_imm20
+	j_imm20,
+	OPCODE,
+	func3,
+	func1
 	);
 
 	input logic [31:0] instruction;
@@ -20,10 +23,14 @@ module decoder_unit(
 	output logic [11:0] b_imm12;
 	output logic [19:0] u_imm20;
 	output logic [19:0] j_imm20;
+	output logic [6:0] OPCODE;
+	output logic [2:0] func3;
+	output logic func1;
 	
-	logic [6:0] OPCODE;
+	
 	assign OPCODE = instruction[6:0];
-
+	assign func3 = instruction[14:12];
+    assign func1 = instruction[30];
 	assign rs1 = instruction[19:15];
 	assign rs2 = instruction[24:20];
 	assign rd  = instruction[11:7];
