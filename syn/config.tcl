@@ -2,7 +2,7 @@
 # ==========================================================================
 set TOPLEVEL "CPU_TopLevel"
 #set PROJECT_DIR ""
-set PROJECT_DIR "../.."
+set PROJECT_DIR ".."
 #set BASE "."
 
 set PROCESS "65GP"; # 65LP or 65GP
@@ -10,7 +10,7 @@ set CORNER "LOW"
 
 # Source files 
 # ==========================================================================
-set BASE "$PROJECT_DIR/src/verilog"
+set BASE "$PROJECT_DIR/verilog"
 
 set RTL_SOURCE_FILES [list \
    "$BASE/CPU_TopLevel.v" "$BASE/ALU_DataPath.v" "$BASE/SLT.v" "$BASE/ALU_OUT_SEL.v" "$BASE/regfile.v" "$BASE/ALU_TOPLEVEL.v" "$BASE/control_unit.v" "$BASE/ALU_Control.v" "$BASE/decoder_unit.v" "$BASE/forward_unit.v" "$BASE/opcode.vh" "$BASE/pc.v" "$BASE/pipeline_reg.v" "$BASE/branch_control.v" "$BASE/MEMControler.v" \

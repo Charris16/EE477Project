@@ -6,7 +6,7 @@
 ##############################################################################
 
 # Get configuration settings
-source ../../src/syn/config.tcl 
+source config.tcl 
 
 # Set library search path
 set_app_var search_path [concat $search_path $ADDITIONAL_SEARCH_PATHS]

@@ -1,5 +1,5 @@
 
-source ../../src/syn/config.tcl
+source config.tcl
 
 # Reports generation                                                          #
 #=============================================================================#

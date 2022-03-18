@@ -9,7 +9,7 @@ echo [pwd]
 #=============================================================================#
 
 # Get configuration settings
-source ../../src/syn/config.tcl
+source config.tcl
 
 file mkdir ./$results
 file mkdir ./$reports
@@ -17,15 +17,15 @@ file mkdir ./$reports
 # Read technology library                                                     #
 #=============================================================================#
 #Uncommented this line
-source -echo -verbose ../../src/syn/library.tcl
+source -echo -verbose library.tcl
 
 # Read design RTL                                                             #
 #=============================================================================#
-source -echo -verbose ../../src/syn/verilog.tcl
+source -echo -verbose verilog.tcl
 
 # Set design constraints                                                      #
 #=============================================================================#
-source -echo -verbose ../../src/syn/constraints.tcl
+source -echo -verbose constraints.tcl
 
 # Synthesize                                                                  #
 #=============================================================================#
@@ -67,11 +67,11 @@ if {$DC_COMPILE_ADDITIONAL} {
 
 # Reports generation                                                          #
 #=============================================================================#
-source -echo -verbose ../../src/syn/reports.tcl
+source -echo -verbose reports.tcl
 
 # Generate design data                                                        #
 #=============================================================================#
-source -echo -verbose ../../src/syn/generate.tcl
+source -echo -verbose generate.tcl
 
 # Report runtime and quit
 #=============================================================================#

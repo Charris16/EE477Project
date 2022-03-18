@@ -1,5 +1,5 @@
 
-source ../../src/syn/config.tcl
+source config.tcl
 
 # Read in the design RTL
 # ======================================
