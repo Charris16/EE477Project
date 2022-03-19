@@ -23,12 +23,10 @@ module ALU_32b(
     // output reg [3:0] FLAG_REG;
 
     logic [31:0] DATA0, DATA1;
-    logic ALU_EN;
 
     ALU_Control CONTROL_UNIT(
         .DATA0(DATA0),
         .DATA1(DATA1),
-        .ALU_EN(ALU_EN),
         .RS1_DATA(RS1_DATA),
         .RS2_DATA(RS2_DATA),
         .PC(PC),
@@ -43,8 +41,7 @@ module ALU_32b(
         .IN0(DATA0),
         .IN1(DATA1),
         .FUNC3(FUNCT3),
-        .SUB(FUNCT1),
-        .ALU_EN(ALU_EN)
+        .SUB(FUNCT1)
         );
 
 

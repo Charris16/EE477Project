@@ -1,7 +1,6 @@
 module ALU_Control (
     DATA0,
     DATA1,
-    ALU_EN,
     RS1_DATA,
     RS2_DATA,
     PC,
@@ -20,7 +19,6 @@ module ALU_Control (
     input logic [2:0] FUNCT3;
 
     output logic [31:0] DATA0, DATA1;
-    output logic ALU_EN;
 
     logic [31:0] IMM32, U_IMM32;
     logic shift_op, INTEM, LUI, APUIC;
@@ -38,14 +36,14 @@ module ALU_Control (
     // FUNCT3 101  SLRI / SLAI
     always_comb begin
         case(OPCODE) 
-            7'b0010011: begin ALU_EN = 1'b1; INTEM = 1'b1; LUI = 1'b0; APUIC = 1'b0; end // ALU on register and Imm
-            7'b0110011: begin ALU_EN = 1'b1; INTEM = 1'b0; LUI = 1'b0; APUIC = 1'b0; end // ALU on 2 registers
-            7'b0100011: begin ALU_EN = 1'b1; INTEM = 1'b1; LUI = 1'b0; APUIC = 1'b0; end // Load/Store on register and Imm
-            7'b0000011: begin ALU_EN = 1'b1; INTEM = 1'b1; LUI = 1'b0; APUIC = 1'b0; end // Load/Store on register two registers
-            7'b0110111: begin ALU_EN = 1'b1; INTEM = 1'b1; LUI = 1'b1; APUIC = 1'b0; end // LUI
-            7'b0010111: begin ALU_EN = 1'b1; INTEM = 1'b1; LUI = 1'b0; APUIC = 1'b1; end // APUIC
+            7'b0010011: begin INTEM = 1'b1; LUI = 1'b0; APUIC = 1'b0; end // ALU on register and Imm
+            7'b0110011: begin INTEM = 1'b0; LUI = 1'b0; APUIC = 1'b0; end // ALU on 2 registers
+            7'b0100011: begin INTEM = 1'b1; LUI = 1'b0; APUIC = 1'b0; end // Load/Store on register and Imm
+            7'b0000011: begin INTEM = 1'b1; LUI = 1'b0; APUIC = 1'b0; end // Load/Store on register two registers
+            7'b0110111: begin INTEM = 1'b1; LUI = 1'b1; APUIC = 1'b0; end // LUI
+            7'b0010111: begin INTEM = 1'b1; LUI = 1'b0; APUIC = 1'b1; end // APUIC
             // 7'b1100111: begin ALU_EN = 1'b1; INTEM = 1'b1; LUI = 1'b0; APUIC = 1'b0; end // JALR
-            default: begin ALU_EN = 1'b0; INTEM = 1'b0; LUI = 1'b0; APUIC = 1'b0; end
+            default: begin INTEM = 1'b0; LUI = 1'b0; APUIC = 1'b0; end
         endcase
     end
     assign shift_op = ((FUNCT3 == 3'b001) | (FUNCT3 == 3'b101));

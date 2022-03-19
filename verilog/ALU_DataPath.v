@@ -1,16 +1,14 @@
 module ALU_DataPath (
     OUT,
-    // FLAGS,
     IN0,
     IN1,
     FUNC3,
-    SUB,
-    ALU_EN
+    SUB
     );
     
     input logic [31:0] IN0,IN1;
     input logic [2:0] FUNC3;
-    input logic SUB, ALU_EN;
+    input logic SUB;
     
     output logic [31:0] OUT;
 
