@@ -67,7 +67,7 @@ module ALU_Control (
 
         if (APUIC) DATA0 = PC;
         else if (LUI) DATA0 = 32'b0;
-        else = RS1_DATA;
+        else DATA0 = RS1_DATA;
 
         if (INTEM) DATA1 = const_swap;
         else DATA1 = RS2_DATA;
