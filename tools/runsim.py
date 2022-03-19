@@ -7,7 +7,9 @@ import os
 # os.system("setenv EDA_TOOLS_PATH /home/lab.apps/vlsiapps_new/")
 # os.system("set path = (/home/lab.apps/vlsiapps_new/icc2/current/bin $path)")
 # os.system("source /home/lab.apps/vlsiapps_new/cshrc/general.cshrc")
-print("_____________________________________________")
+test_in = input("Enter Testname to run test or type --list to view loaded test files")
+print("_____________________________________________________________________________")
+
 while(1):
     test_in = input("Testname to run: ")
     test_list = os.listdir("../../bin/")
@@ -37,6 +39,7 @@ while(1):
             print("Unable to find Test:", test_in)
             print("Run with --list to see avalable tests")
             print("exit with !q")
+            continue
     else:
         print("_____________________________________________")
         print("Setting up Test:", run_test)
