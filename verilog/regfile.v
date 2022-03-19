@@ -9,13 +9,14 @@ module regfile (
     reg[31:0] regs[0:31];
 
     always_ff @(posedge clk) begin
-        if (rst) begin
-            for (int i = 0; i < 32; i++) regs[i] <= 32'b0;
-        end
-        else begin
+        // if (rst) begin
+            // for (int i = 0; i < 32; i++) regs[i] <= 32'b0;
+        // end
+        // else begin
+			regs[0] <= 32'b0;
             if (wr_en & (wr_addr != 5'b0)) regs[wr_addr] <= wr_data;
             else regs[wr_addr] <= regs[wr_addr];
-        end
+        // end
     end
 
     always_comb begin
