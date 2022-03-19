@@ -31,19 +31,27 @@ module ALU_DataPath (
     always_comb begin
         case(FUNC3)
             // ADDER CASES
-            3'b000: OUT = ALU_EN ? ADDER_OUT : 32'b0;  // ADD SUB / ADDI
+            // 3'b000: OUT = ALU_EN ? ADDER_OUT : 32'b0;  // ADD SUB / ADDI
+            3'b000: OUT = ADDER_OUT;  // ADD SUB / ADDI
             
             // SLT and SLTU
-            3'b010: OUT = ALU_EN ? {31'b0, SLT_OUT} : 32'b0;  // SLT / SLTI
-            3'b011: OUT = ALU_EN ? {31'b0, SLT_OUT} : 32'b0;  // SLTU / SLTUI
-            
+            // 3'b010: OUT = ALU_EN ? {31'b0, SLT_OUT} : 32'b0;  // SLT / SLTI
+            // 3'b011: OUT = ALU_EN ? {31'b0, SLT_OUT} : 32'b0;  // SLTU / SLTUI
+            3'b010: OUT = SLT_OUT;  // SLT / SLTI
+            3'b011: OUT = SLT_OUT;  // SLTU / SLTUI
+
             // LOGIC CASES
-            3'b100: OUT = ALU_EN ? (IN0 ^ IN1) : 32'b0; // XOR / XORI
-            3'b110: OUT = ALU_EN ? (IN0 | IN1) : 32'b0; // OR / ORI
-            3'b111: OUT = ALU_EN ? (IN0 & IN1) : 32'b0; // AND / ANDI
+            3'b100: OUT = (IN0 ^ IN1); // XOR / XORI
+            3'b110: OUT = (IN0 | IN1); // OR / ORI
+            3'b111: OUT = (IN0 & IN1); // AND / ANDI
+
+            // 3'b100: OUT = ALU_EN ? (IN0 ^ IN1) : 32'b0; // XOR / XORI
+            // 3'b110: OUT = ALU_EN ? (IN0 | IN1) : 32'b0; // OR / ORI
+            // 3'b111: OUT = ALU_EN ? (IN0 & IN1) : 32'b0; // AND / ANDI
             
             // SHIFTER CASES
-            default: OUT = ALU_EN ? SHIFT_OUT : 32'b0; //  SLLI / SLL / SRLI / SRL / SRA / SRAI
+            // default: OUT = ALU_EN ? SHIFT_OUT : 32'b0; //  SLLI / SLL / SRLI / SRL / SRA / SRAI
+            default: OUT = SHIFT_OUT; //  SLLI / SLL / SRLI / SRL / SRA / SRAI
         endcase
     end
 endmodule 
