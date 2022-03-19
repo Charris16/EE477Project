@@ -8,7 +8,7 @@ set TECH_NDM "$TSMC_PATH/Back_End/milkyway/tcbn65gplus_200a/techfiles/tsmcn65_9l
 set STDCELL_LEF "$TSMC_PATH/Back_End/lef/tcbn65gplus_200a/lef/tcbn65gplus_9lmT2.lef"
 
 #source file
-set SYN_VERILOG "../../syn/results/CPU_TopLevel.syn.v"
+set SYN_VERILOG "../syn/results/CPU_TopLevel.syn.v"
 
 
 
@@ -38,7 +38,7 @@ initialize_floorplan -core_utilization 0.8 -side_ratio {3 2}
 
 # TIMING CONSTRAINTS
 # ==========================================================================
-read_sdc ../../syn/results/$DESIGN_NAME.syn.sdc -version 1.7
+read_sdc ../syn/results/$DESIGN_NAME.syn.sdc -version 1.7
 
 #1. Placement
 
