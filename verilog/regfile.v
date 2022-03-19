@@ -9,11 +9,14 @@ module regfile (
     reg[31:0] regs[31:0];
 
     always_ff @(posedge clk) begin
-		if (wr_en) begin
-			if (wr_addr != 5'b0) regs[wr_addr] <= wr_data;
-			else regs[0] <= 32'b0;
+		if (rst) for regs <= 0;
+		else begin
+			if (wr_en) begin
+				if (wr_addr != 5'b0) regs[wr_addr] <= wr_data;
+				else regs[0] <= 32'b0;
+			end
+			else regs[wr_addr] <= regs[wr_addr];
 		end
-		else regs[wr_addr] <= regs[wr_addr];
     end
 
     always_comb begin
