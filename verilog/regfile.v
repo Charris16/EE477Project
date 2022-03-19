@@ -6,27 +6,26 @@ module regfile (
 	input logic [4:0] rd_addr1, rd_addr2,
 	output logic [31:0] rd_data1, rd_data2
 );
-	//reg x0 == 0 by default
-	reg[31:0] regs[0:31];
-	
-	//write control
-	always_ff @(posedge clk) begin
-		if (!rst & wr_en) begin
-			//cant write to x0 reg
-			if (wr_addr != 0) regs[wr_addr] <= wr_data;
-			// else regs[wr_addr] <= 32'b0;
-		end
-	end
+    reg[31:0] regs[0:31];
 
-	//read for #1
-	always_comb begin
-		if (rst | !rd_en1 | rd_addr1 == 0) begin rd_data1 = 0; end
-		else begin rd_data1 = regs[rd_addr1]; end
-	end
+    always_ff @(posedge clk) begin
+        if (rst) begin
+            for (int i = 0; i < 32; i++) regs[i] <= 32'b0;
+        end
+        else begin
+            if (wr_en & (wr_addr != 5'b0)) regs[wr_addr] <= wr_data;
+            else regs[wr_addr] <= regs[wr_addr];
+        end
+    end
 
-	//read for #2
-	always_comb begin
-		if (rst | !rd_en2 | rd_addr2 == 0) begin rd_data2 = 0; end
-		else begin rd_data2 = regs[rd_addr2]; end
-	end
+    always_comb begin
+        if (rd_en1) rd_data1 = regs[rd_addr1];
+        else rd_data1 = 32'b0;
+    end
+
+    always_comb begin
+        if (rd_en2) rd_data2 = regs[rd_addr2];
+        else rd_data2 = 32'b0;
+    end
+
 endmodule
