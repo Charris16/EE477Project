@@ -9,7 +9,7 @@ module regfile (
     reg[31:0] regs[31:0];
 
     always_ff @(posedge clk) begin
-		if (rst) regs <= 0;
+		if (rst) for (int i = 0; i < 32; i++) regs[i] <= 0;
 		else begin
 			if (wr_en) begin
 				if (wr_addr != 5'b0) regs[wr_addr] <= wr_data;
