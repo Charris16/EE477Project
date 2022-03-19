@@ -38,7 +38,7 @@ module CPU_tb();
     end
 
     initial begin
-	$sdf_annotate("./CPU_TopLevel.apr.sdf", CPU_TopLevel0);
+	$sdf_annotate("../../syn/results/CPU_TopLevel.apr.sdf", CPU_TopLevel0);
         $vcdpluson;
         $dumpvars();
 	    Reset <= 1'b1; @(posedge CLK);
