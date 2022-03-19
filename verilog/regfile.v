@@ -11,7 +11,7 @@ module regfile (
     always_ff @(posedge clk) begin
 		if (wr_en) begin
 			if (wr_addr != 5'b0) regs[wr_addr] <= wr_data;
-			else regs[wr_addr] <= 32'b0;
+			else regs[0] <= 32'b0;
 		end
 		else regs[wr_addr] <= regs[wr_addr];
     end
