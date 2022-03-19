@@ -22,7 +22,7 @@ module ALU_Control (
 
     logic [31:0] IMM32, U_IMM32;
     logic shift_op, INTEM, LUI, APUIC;
-    signExtend_12 IMM_EXTEND(IMM32, IMM12);
+    IMM32 = {{20{IMM12[11]}}, IMM12[11:0]};
     assign U_IMM32 = {U_IMM20, 12'b0};
     // ARITHMATIC AND LOGIC FUNCT3
     // FUNCT3 000  ADD SUB / ADDI
@@ -42,35 +42,18 @@ module ALU_Control (
             7'b0000011: begin INTEM = 1'b1; LUI = 1'b0; APUIC = 1'b0; end // Load/Store on register two registers
             7'b0110111: begin INTEM = 1'b1; LUI = 1'b1; APUIC = 1'b0; end // LUI
             7'b0010111: begin INTEM = 1'b1; LUI = 1'b0; APUIC = 1'b1; end // APUIC
-            // 7'b1100111: begin ALU_EN = 1'b1; INTEM = 1'b1; LUI = 1'b0; APUIC = 1'b0; end // JALR
             default: begin INTEM = 1'b0; LUI = 1'b0; APUIC = 1'b0; end
         endcase
     end
     assign shift_op = ((FUNCT3 == 3'b001) | (FUNCT3 == 3'b101));
-    
+
     logic [31:0] const_swap, IMM_val, LUI_base;
 
-    always_comb begin
-        if (LUI | APUIC) IMM_val = U_IMM32;
-        else IMM_val = IMM32;
-        
-        if (shift_op) const_swap = RS2;
-        else const_swap = IMM_val;
-
-        if (APUIC) DATA0 = PC;
-        else if (LUI) DATA0 = 32'b0;
-        else DATA0 = RS1_DATA;
-
-        if (INTEM) DATA1 = const_swap;
-        else DATA1 = RS2_DATA;
-
-    end
-
-    // assign IMM_val = (LUI | APUIC) ? U_IMM32 : IMM32;
-    // assign const_swap = shift_op ? RS2 : IMM_val;
-    // assign LUI_base = APUIC ? PC : 32'b0;
-    // assign DATA0 = (APUIC | LUI) ? LUI_base : RS1_DATA;
-    // assign DATA1 = INTEM ? const_swap : RS2_DATA;
+    assign IMM_val = (LUI | APUIC) ? U_IMM32 : IMM32;
+    assign const_swap = shift_op ? RS2 : IMM_val;
+    assign LUI_base = APUIC ? PC : 32'b0;
+    assign DATA0 = (APUIC | LUI) ? LUI_base : RS1_DATA;
+    assign DATA1 = INTEM ? const_swap : RS2_DATA;
 
 endmodule
 
