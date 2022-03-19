@@ -1,5 +1,15 @@
 ## EE477Project
+
+
+## Test Codde
 **Python 3.10** required to compile test scripts
+makefile in project directory compiles test biniaries
+
+Compile Test Scripts
+
+    cd project_dir
+    make
+
 
 ## Simulation
 
