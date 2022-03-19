@@ -22,7 +22,7 @@ module ALU_Control (
 
     logic [31:0] IMM32, U_IMM32;
     logic shift_op, INTEM, LUI, APUIC;
-    IMM32 = {{20{IMM12[11]}}, IMM12[11:0]};
+    assign IMM32 = {{20{IMM12[11]}}, IMM12[11:0]};
     assign U_IMM32 = {U_IMM20, 12'b0};
     // ARITHMATIC AND LOGIC FUNCT3
     // FUNCT3 000  ADD SUB / ADDI
