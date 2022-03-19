@@ -176,12 +176,9 @@ module CPU_TopLevel(Instr_Addr, MEM_addr, MEM_WR_out, MEM_type, MEM_rd_en, MEM_w
     pipelineReg_1 FUNCT1_pipe2(FUNCT1_stage3, FUNCT1_stage2, CLK, Reset);
     pipelineReg_1 wr_en_pipe2(wr_en_stage3, wr_en_stage2, CLK, Reset);
     
-    // assign ALU_OUT = ((OPCODE == 7'b1101111) | (OPCODE == 7'b1100111)) ? PC_def_stage3 : Out_Stage3; 
 
     ALU_32b ALU(
-        // .ALU_OUT(Out_Stage3),
         .ALU_OUT(ALU_OUT),
-        // .FLAG_REG(FLAG_REG),
         .RS1_DATA(rd_data1_stage3),
         .RS2_DATA(rd_data2_stage3),
         .PC(PC_stage3),

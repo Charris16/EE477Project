@@ -36,8 +36,16 @@ module pc(
 
     always_comb begin
         case(ps)
-            INC4: inc_amt = stall_pc ? IP : IP + 32'd4;
-            STALL: inc_amt = b_taken ? IP + up_amt : IP + 32'd4;
+            INC4: begin 
+                if (stall_pc) inc_amt = IP;
+                else inc_amt = IP + 32'd4;
+                // inc_amt = stall_pc ? IP : IP + 32'd4;
+            end
+            STALL: begin
+                if (b_taken) inc_amt = IP + up_amt;
+                else inc_amt = IP + 32'd4;
+                // inc_amt = b_taken ? IP + up_amt : IP + 32'd4;
+            end
             default inc_amt = IP + 32'd4;
         endcase
     end
