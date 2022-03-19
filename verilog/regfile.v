@@ -6,7 +6,7 @@ module regfile (
 	input logic [4:0] rd_addr1, rd_addr2,
 	output logic [31:0] rd_data1, rd_data2
 );
-    reg[31:0] regs[0:31];
+    reg[31:0] regs[31:0];
 
     always_ff @(posedge clk) begin
         if (rst) begin
